@@ -1,0 +1,82 @@
+﻿@model DAL.Student
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Student</h4>
+    <hr />
+    <dl class="dl-horizontal">
+       
+            <dt>
+                Photo
+            </dt>
+            <dd>
+                <img src="~/File?id=@Model.Id" alt="photo" style="width: 150px; height: 150px;" />
+            </dd>
+ 
+        <dt>
+            @Html.DisplayNameFor(model => model.StudentID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.StudentID)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.LastName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LastName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.FirstName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FirstName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.MidName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.MidName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CourseID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Course.CourseAbbv)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.EPC)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.EPC)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.EnrollmentDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.EnrollmentDate)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
