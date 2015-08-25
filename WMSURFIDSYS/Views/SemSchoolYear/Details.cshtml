@@ -1,0 +1,57 @@
+﻿@model DAL.SemSchoolYear
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Semester and SchoolYear</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Schoolyear.YearFrom)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Schoolyear.YearFrom)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Schoolyear.YearTo)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Schoolyear.YearTo)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Semester.SemesterName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Semester.SemesterName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.EnrollmentDateStart)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.EnrollmentDateStart)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.SemesterDateEnd)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SemesterDateEnd)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

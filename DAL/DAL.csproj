@@ -58,9 +58,9 @@
     <Compile Include="Course.cs" />
     <Compile Include="Department.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Schoolyear.cs" />
-    <Compile Include="Sem.cs" />
-    <Compile Include="Semschoolyear.cs" />
+    <Compile Include="SchoolYear.cs" />
+    <Compile Include="Semester.cs" />
+    <Compile Include="SemSchoolYear.cs" />
     <Compile Include="Student.cs" />
   </ItemGroup>
   <ItemGroup>

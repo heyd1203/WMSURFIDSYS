@@ -1,11 +1,14 @@
-﻿using System.Data.Entity;
+﻿using Lu.AspnetIdentity.Dapper;
+using Microsoft.AspNet.Identity;
+using System.Configuration;
+using System.Data;
+using System.Data.SqlClient;
 using System.Security.Claims;
 using System.Threading.Tasks;
-using Microsoft.AspNet.Identity;
-using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace WMSURFIDSYS.Models
 {
+    [Lu.Dapper.Extensions.Utils.Table("IdentityUsers")]
     // You can add profile data for the user by adding more properties to your ApplicationUser class, please visit http://go.microsoft.com/fwlink/?LinkID=317594 to learn more.
     public class ApplicationUser : IdentityUser
     {
@@ -17,17 +20,25 @@ namespace WMSURFIDSYS.Models
             return userIdentity;
         }
     }
-
-    public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
+    [Lu.Dapper.Extensions.Utils.Table("IdentityRoles")]
+    public class ApplicationRole : IdentityRole
     {
-        public ApplicationDbContext()
-            : base("DefaultConnection", throwIfV1Schema: false)
+    }
+
+    public class ApplicationDbContext : DapperIdentityDbContext<ApplicationUser, ApplicationRole>
+    {
+        public ApplicationDbContext(IDbConnection connection)
+            : base(connection)
         {
         }
 
         public static ApplicationDbContext Create()
         {
-            return new ApplicationDbContext();
+            //var connString = System.Configuration.ConfigurationManager.ConnectionStrings["DefaultIdentityConnection"].ConnectionString;
+            var connString = new SqlConnection(ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString);
+
+            //var conn = new SqlConnection(connString);
+            return new ApplicationDbContext(connString);
         }
     }
 }

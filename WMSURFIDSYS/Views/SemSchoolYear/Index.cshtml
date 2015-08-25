@@ -1,0 +1,57 @@
+﻿@model IEnumerable<DAL.SemSchoolYear>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Current School Year</h2>
+
+<ul class="nav nav-pills">
+    <li> @Html.ActionLink("School Year", "Index", "schoolyear")</li>
+    <li> @Html.ActionLink("Semester", "Index", "semester")</li>
+</ul>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+
+<table class="table">
+    <tr>
+        <th>
+            School Year Range
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SemesterID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.EnrollmentDateStart)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SemesterDateEnd)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @item.Schoolyear.YearFrom  -  @item.Schoolyear.YearTo
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.SemesterID)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.EnrollmentDateStart)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.SemesterDateEnd)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
+            @Html.ActionLink("Details", "Details", new { id=item.Id }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
+        </td>
+    </tr>
+}
+
+</table>

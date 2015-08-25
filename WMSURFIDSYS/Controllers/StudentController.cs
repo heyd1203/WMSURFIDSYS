@@ -229,7 +229,6 @@ namespace WMSURFIDSYS.Controllers
         {
             var db = DAL.DbContext.Create();
 
-            //var exist = db.Students.FirstOrDefault(s => s.EPC == student.EPC);
             var existStudent = db.Students.All().FirstOrDefault(s => s.StudentID == student.StudentID);
             var existEPC = db.Students.All().FirstOrDefault(s => s.EPC == student.EPC);
 

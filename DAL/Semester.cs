@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace DAL
 {
-    public class Sem
+    public class Semester
     {
-        public int SemID { get; set; }
-        public string SemName { get; set; } 
+        public int Id { get; set; }
+        public string SemesterName { get; set; } 
     }
 }

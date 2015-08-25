@@ -6,14 +6,14 @@ using System.Threading.Tasks;
 
 namespace DAL
 {
-    public class Semschoolyear
+    public class SemSchoolYear
     {
        
-        public int SemSchoolyearID { get; set; }
-        public int? SchoolyearID { get; set; }
-        public virtual Schoolyear Schoolyear { get; set; }
-        public int SemID { get; set; }
-        public virtual Sem Sem { get; set; }
+        public int Id { get; set; }
+        public int SchoolYearID { get; set; }
+        public virtual SchoolYear Schoolyear { get; set; }
+        public int SemesterID { get; set; }
+        public virtual Semester Semester { get; set; }
         public DateTime EnrollmentDateStart { get; set; }
         public DateTime SemesterDateEnd { get; set; }
     }

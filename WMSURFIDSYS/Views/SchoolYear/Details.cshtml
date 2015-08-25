@@ -1,0 +1,42 @@
+﻿@model DAL.SchoolYear
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>SchoolYear</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.YearFrom)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.YearFrom)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.YearTo)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.YearTo)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.SchoolYearRange)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SchoolYearRange)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.SchoolyearID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

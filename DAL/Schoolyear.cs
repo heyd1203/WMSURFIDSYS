@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace DAL
 {
-    public class Schoolyear
+    public class SchoolYear
     {
-        public int SchoolyearID { get; set; }
+        public int Id { get; set; }
         public string YearFrom { get; set; }
         public string YearTo { get; set; }
         public string SchoolYearRange

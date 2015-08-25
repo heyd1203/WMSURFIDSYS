@@ -22,11 +22,9 @@ namespace DAL
 
         public Table<Student> Students { get; set; }
         public Table<Course> Courses { get; set; }
-        //public Table<Person> People { get; set; }
-        //public Table<File> Files { get; set; }
-        public Table<Sem> Sems { get; set; }
-        public Table<Schoolyear> Schoolyears { get; set; }
-        public Table<Semschoolyear> SemSchoolyears { get; set; }
+        public Table<Semester> Semesters { get; set; }
+        public Table<SchoolYear> SchoolYears { get; set; }
+        public Table<SemSchoolYear> SemSchoolYears { get; set; }
         public Table<Department> Departments { get; set; }
 
         private System.Data.IDbConnection CreateConnection()
@@ -61,8 +59,6 @@ namespace DAL
 
             return student;
         }
-
-      
 
         public Student SelectStudent(int id)
         {
@@ -118,7 +114,6 @@ namespace DAL
 
         }
 
-       
 
         public bool DeleteStudent(int StudentID)
         {
@@ -158,17 +153,17 @@ namespace DAL
             }
         }
 
-        public Course GetCourseByID(int CourseId)
-        {
-            using (var cnn = CreateConnection())
-            {
-                cnn.Open();
-                string strQuery = string.Format("Select Id, CourseName, CourseAbbv from Courses where " +
-                "Id={0}", CourseId);
-                var course = cnn.Query<Course>(strQuery).Single<Course>();
-                return course;
-            }
-        }
+        //public Course GetCourseByID(int CourseId)
+        //{
+        //    using (var cnn = CreateConnection())
+        //    {
+        //        cnn.Open();
+        //        string strQuery = string.Format("Select Id, CourseName, CourseAbbv from Courses where " +
+        //        "Id={0}", CourseId);
+        //        var course = cnn.Query<Course>(strQuery).Single<Course>();
+        //        return course;
+        //    }
+        //}
 
         public bool UpdateCourse(Course course)
         {
@@ -181,9 +176,9 @@ namespace DAL
                   
                     cnn.Execute(sqlQuery, new
                     {
-                        Id = course.Id,
                         course.CourseName,
-                        course.CourseAbbv
+                        course.CourseAbbv,
+                        course.Id
                     });
 
                 }
@@ -213,6 +208,31 @@ namespace DAL
             {
                 return false;
             }
+        }
+
+        public bool UpdateSemester(Semester semester)
+        {
+            try
+            {
+                using (var cnn = CreateConnection())
+                {
+                    cnn.Open();
+                    string sqlQuery = "UPDATE Semesters SET SemesterName = @SemesterName WHERE Id=@Id";
+
+                    cnn.Execute(sqlQuery, new
+                    {
+                        semester.SemesterName,
+                        semester.Id
+                    });
+
+                }
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+
         }
 
 

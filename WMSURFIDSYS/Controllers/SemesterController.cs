@@ -9,17 +9,17 @@ using Dapper;
 
 namespace WMSURFIDSYS.Controllers
 {
-    public class CourseController : Controller
+    public class SemesterController : Controller
     {
-        // GET: Course
+        // GET: Semester
         public ActionResult Index()
         {
             var db = DAL.DbContext.Create();
 
-            return View(db.GetCourses());
+            return View(db.Semesters.All());
         }
 
-        // GET: Course/Details/5
+        // GET: Sem/Details/5
         public ActionResult Details(int id)
         {
             var db = DAL.DbContext.Create();
@@ -28,102 +28,103 @@ namespace WMSURFIDSYS.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Course course = db.Courses.Get(id);
-            if (course == null)
+
+            Semester semester = db.Semesters.Get(id);
+
+            if (semester == null)
             {
                 return HttpNotFound();
             }
-            return View(course);
+            return View(semester);
         }
 
-        // GET: Course/Create
+        // GET: Sem/Create
         public ActionResult Create()
         {
             return View();
         }
 
-        // POST: Course/Create
+        // POST: Sem/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "CourseID,CourseName,CourseAbbv")] Course course)
+        public ActionResult Create([Bind(Include = "SemesterID,SemesterName")] Semester semester)
         {
             var db = DAL.DbContext.Create();
+
             if (ModelState.IsValid)
             {
-                var courseId = db.Courses.Insert(course);
-
-                if (courseId.HasValue && courseId.Value > 0)
-                {
-                    return RedirectToAction("Index");
-                }
-                else
-                {
-                    return View();
-                }
-            }
-
-            return View(course);
-        }
-
-        // GET: Course/Edit/5
-        public ActionResult Edit(int id)
-        {
-            var db = DAL.DbContext.Create();
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Course course = db.Courses.Get(id);
-            if (course == null)
-            {
-                return HttpNotFound();
-            }
-            return View(course);
-        }
-
-        // POST: Course/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(Course course)
-        {
-            var db = DAL.DbContext.Create();
-            if (ModelState.IsValid)
-            {
-                db.UpdateCourse(course);
+                db.Semesters.Insert(semester);
                 return RedirectToAction("Index");
             }
 
-            return View(course);
+            return View(semester);
         }
 
-        // GET: Course/Delete/5
-        public ActionResult Delete(int id)
+        // GET: Sem/Edit/5
+        public ActionResult Edit(int id)
         {
             var db = DAL.DbContext.Create();
+
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Course course = db.Courses.Get(id);
-            if (course == null)
+            Semester semester = db.Semesters.Get(id);
+            if (semester == null)
             {
                 return HttpNotFound();
             }
-            return View(course);
+            return View(semester);
         }
 
-        // POST: Course/Delete/5
+        // POST: Sem/Edit/5
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Edit(Semester semester)
+        {
+            var db = DAL.DbContext.Create();
+
+            if (ModelState.IsValid)
+            {
+                db.UpdateSemester(semester);
+                return RedirectToAction("Index");
+            }
+            return View(semester);
+        }
+
+        // GET: Sem/Delete/5
+        public ActionResult Delete(int id)
+        {
+            var db = DAL.DbContext.Create();
+
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Semester semester = db.Semesters.Get(id);
+
+            if (semester == null)
+            {
+                return HttpNotFound();
+            }
+            return View(semester);
+        }
+
+        // POST: Sem/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
             var db = DAL.DbContext.Create();
-            Course course = db.Courses.Get(id);
-            bool IsDeleted = db.DeleteCourse(id);
+
+            //Semester semester = db.Semesters.Get(id);
+            
+            bool IsDeleted = db.Semesters.Delete(id);
+
             if (IsDeleted)
             {
                 return RedirectToAction("Index");
@@ -132,12 +133,12 @@ namespace WMSURFIDSYS.Controllers
             {
                 return View();
             }
-
         }
 
         protected override void Dispose(bool disposing)
         {
             var db = DAL.DbContext.Create();
+
             if (disposing)
             {
                 db.Dispose();
