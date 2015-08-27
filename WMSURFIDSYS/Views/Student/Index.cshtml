@@ -32,13 +32,10 @@
             First Name
         </th>
         <th>
-            Middle Name
+            Middle Initial
         </th>
         <th>
             @Html.ActionLink("Course", "Index", new { sortOrder = ViewBag.DateSortParm })
-        </th>
-        <th>
-            EPC
         </th>
         <th>
             Enrollment Date
@@ -63,11 +60,12 @@
         <td>
             @Html.DisplayFor(modelItem => item.Course.CourseAbbv)
         </td>
+        
         <td>
-            @Html.DisplayFor(modelItem => item.EPC)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.EnrollmentDate)
+            @if (item.EnrollmentDate != null)
+            { @item.EnrollmentDate.Value.ToShortDateString() }
+
+            @*@Html.DisplayFor(modelItem => item.EnrollmentDate)*@
         </td>
         <td>
             @Html.ActionLink("Select", "Select", new { id = item.Id }) |

@@ -117,8 +117,11 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="photo not available" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\photo not available.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="Semester_CheckForDependecies" xml:space="preserve">
+    <value>SELECT * FROM [WMSURFIDSYS].[dbo].[SemSchoolYears] WHERE SemesterId = @semesterId</value>
+  </data>
+  <data name="Student_CheckForDependencies" xml:space="preserve">
+    <value>SELECT 1 FROM [WMSURFIDSYS].[dbo].[TapLogs] WHERE StudentID = @studentId UNION 
+SELECT 1 FROM [WMSURFIDSYS].[dbo].[TapLogs] WHERE StudentID = @studentId</value>
   </data>
 </root>

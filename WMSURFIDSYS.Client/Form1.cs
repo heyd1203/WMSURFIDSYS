@@ -14,21 +14,38 @@ using DAL;
 
 namespace WMSURFIDSYS.Client
 {
-    public partial class Form1 : Form
+    public partial class WMSURFIDSYS : Form
     {
 
         Thread findThread;
         public int m_btnStop = 0;
         public delegate void InvokeDelegate(string str);
-        public Form1()
+        public WMSURFIDSYS()
         {
             InitializeComponent();
         }
 
-   
+
         private void Form1_Load(object sender, EventArgs e)
         {
+            var db = DAL.DbContext.Create();
             USBApi.API_OpenUsb();
+
+            //display current date and time
+            ShowDate.Text = DateTime.Now.ToString("MM dd yyyy");
+            ShowTime.Text = DateTime.Now.ToString("HH:mm");
+
+            DateTime today = DateTime.Today;
+            var validenrollmentdate = db.SelectSemSchoolYear(today);
+
+            if (validenrollmentdate != null)
+            {
+                validenrollmentdate.Semester = db.Semesters.Get(validenrollmentdate.SemesterID);
+                validenrollmentdate.Schoolyear = db.SchoolYears.Get(validenrollmentdate.SchoolYearID);
+            }
+
+            ShowSem.Text = validenrollmentdate.Semester.SemesterName.ToString();
+            ShowSY.Text = validenrollmentdate.Schoolyear.SchoolYearRange.ToString();
 
             findThread = new Thread(new ThreadStart(myThread));
             findThread.Start();
@@ -56,17 +73,29 @@ namespace WMSURFIDSYS.Client
 
                     string epc = onetagInfo.Substring(4);
 
-                   // var existEPC = db.Students.FirstOrDefault(s => s.EPC == epc);
+                    DateTime today = DateTime.Today;
+
                     var existEPC = db.Students.All().FirstOrDefault(s => s.EPC == epc);
+                    var validenrollmentdate = db.SelectSemSchoolYear(today);
 
                     if (existEPC != null)
                     {
-                        //check valid enrollment date
+                        
 
-                        //ValidateEnrollmentDate(existEPC, semschoolyear);
-                        //ValidateEnrollmentDate(existEPC, semschoolyear);
-                        //display data
-                        DisplayStudentInfo(existEPC);
+                        if (ValidateEnrollmentDate(existEPC, validenrollmentdate))
+                        {
+                            //display data
+                            DisplayStudentInfo(existEPC);
+                        }
+
+                        else 
+                        {
+                            DisplayNotEnrolled();
+                        }
+                      
+                        //record tap logs
+                        db.TapLogs.Insert(new TapLog { DateTimeTap =DateTime.Now, StudentID = existEPC.Id
+                        });
                     }
                     else
                     {
@@ -76,22 +105,29 @@ namespace WMSURFIDSYS.Client
             }
         }
 
-        //private void ValidateEnrollmentDate(Student student, Semschoolyear semschoolyear)
-        //{
-        //    DateTime? a = student.EnrollmentDate;
-        //    DateTime? b = semschoolyear.EnrollmentDateStart;
-        //    DateTime? c = semschoolyear.SemesterDateEnd;
+        private bool ValidateEnrollmentDate(Student student, SemSchoolYear semschoolyear)
+        {
+            var db = DAL.DbContext.Create();
 
-        //    if (a >= b && a <= c)
-        //    {
-        //        var valid = 1;
+            DateTime? a = student.EnrollmentDate;
+            DateTime? b = semschoolyear.EnrollmentDateStart;
+            DateTime? c = semschoolyear.SemesterDateEnd;
 
-        //    }
-        //    return valid;
-        //}
+            if (a >= b && a <= c)
+            {
+                return true;
+            }
+            return false;
+        }
 
         private void DisplayStudentInfo(Student student)
         {
+            var db = DAL.DbContext.Create();
+
+            //get course
+            var students = db.Students.Get(student.Id);
+            students.Course = db.Courses.Get(student.CourseID);
+            
 
             if (this.InvokeRequired)
             {
@@ -100,10 +136,18 @@ namespace WMSURFIDSYS.Client
             }
 
             //display data
-            StudentID.Text = student.StudentID.ToString();
+            Error.Text = "";
+            StudID.Text = student.StudentID.ToString();
+            LName.Text = student.LastName.ToString();
+            FName.Text = student.FirstName.ToString();
+            MName.Text = student.MidName.ToString();
+            CAbbv.Text = students.Course.CourseAbbv.ToString();
+           // CourseAbbv.Text = students.Course.CourseAbbv.ToString();
 
             //display image
             image.Image = byteArrayToImage(student.Image);
+
+            
         }
 
         private void DisplayNotValid()
@@ -115,9 +159,20 @@ namespace WMSURFIDSYS.Client
             }
 
             //display data
-            StudentID.Text = "Invalid";
+            Error.Text = "Student is not registered.";
         }
 
+        private void DisplayNotEnrolled()
+        {
+            if (this.InvokeRequired)
+            {
+                this.Invoke(new Action(DisplayNotEnrolled));
+                return;
+            }
+
+            //display data
+            Error.Text = "Student not currently enrolled.";
+        }
         private void image_Click(object sender, EventArgs e)
         {
 
@@ -135,6 +190,11 @@ namespace WMSURFIDSYS.Client
             }
 
             return null;
+        }
+
+        private void label7_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

@@ -21,7 +21,7 @@
             School Year Range
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.SemesterID)
+            @Html.DisplayNameFor(model => model.Semester.SemesterName)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.EnrollmentDateStart)
@@ -38,7 +38,7 @@
             @item.Schoolyear.YearFrom  -  @item.Schoolyear.YearTo
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.SemesterID)
+            @Html.DisplayFor(modelItem => item.Semester.SemesterName)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.EnrollmentDateStart)

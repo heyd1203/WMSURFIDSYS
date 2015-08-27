@@ -88,7 +88,7 @@ namespace WMSURFIDSYS.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "SemSchoolyearID,SchoolYearID,SemesterID,DateFrom,DateTo")] SemSchoolYear semschoolyear)
+        public ActionResult Create(SemSchoolYear semschoolyear)
         {
             var db = DAL.DbContext.Create();
 
@@ -114,7 +114,7 @@ namespace WMSURFIDSYS.Controllers
             var date1 = Convert.ToDateTime(semschoolyear.EnrollmentDateStart);
             var date2 = Convert.ToDateTime(semschoolyear.SemesterDateEnd);
 
-            if (date1 <= date2)
+            if (date1 >= date2)
             {
                 ModelState.AddModelError("", "Unable to save changes. Semester Date End needs to be greater than Enrollment Date Start.");
                 return false;
@@ -131,35 +131,47 @@ namespace WMSURFIDSYS.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            SemSchoolYear semschoolyear = db.SemSchoolYears.Get(id); 
-            if (semschoolyear == null)
+            var semschoolyear = db.SemSchoolYears.Get(id);
+            if (semschoolyear != null)
+            {
+                semschoolyear.Semester = db.Semesters.Get(semschoolyear.SemesterID);
+                semschoolyear.Schoolyear = db.SchoolYears.Get(semschoolyear.SchoolYearID);
+            }
+            else
             {
                 return HttpNotFound();
             }
-            ViewBag.SchoolyearID = new SelectList(db.SchoolYears.All(), "Id", "SchoolYearRange", semschoolyear.SchoolYearID);
-            ViewBag.SemID = new SelectList(db.Semesters.All(), "SemID", "SemName", semschoolyear.SemesterID);
+            ViewBag.SchoolYearID = new SelectList(db.SchoolYears.All(), "Id", "SchoolYearRange", semschoolyear.SchoolYearID);
+            ViewBag.SemesterID = new SelectList(db.Semesters.All(), "Id", "SemesterName", semschoolyear.SemesterID);
             return View(semschoolyear);
         }
 
         // POST: Semschoolyear/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
+        [HttpPost, ActionName("Edit")]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "SemSchoolyearID,SchoolyearID,SemID,DateFrom,DateTo")] SemSchoolYear semschoolyear)
+        public ActionResult EditPost(SemSchoolYear semschoolyear)
         {
             var db = DAL.DbContext.Create();
 
             if (ModelState.IsValid)
             {
-                if (IsValidDate(semschoolyear))
+                var date1 = Convert.ToDateTime(semschoolyear.EnrollmentDateStart);
+                var date2 = Convert.ToDateTime(semschoolyear.SemesterDateEnd);
+
+                if (date1 >= date2)
                 {
-                    db.SemSchoolYears.Update(semschoolyear.Id, semschoolyear);
-                    return RedirectToAction("Index");
+                    ModelState.AddModelError("", "Unable to save changes. Semester Date End needs to be greater than Enrollment Date Start.");
+
                 }
+
+                db.SemSchoolYears.Update(semschoolyear.Id, semschoolyear);
+                return RedirectToAction("Index");
+
             }
-            ViewBag.SchoolyearID = new SelectList(db.SchoolYears.All(), "Id", "SchoolYearRange", semschoolyear.SchoolYearID);
-            ViewBag.SemID = new SelectList(db.Semesters.All(), "SemID", "SemName", semschoolyear.SemesterID);
+            ViewBag.SchoolYearID = new SelectList(db.SchoolYears.All(), "Id", "SchoolYearRange", semschoolyear.SchoolYearID);
+            ViewBag.SemesterID = new SelectList(db.Semesters.All(), "Id", "SemesterName", semschoolyear.SemesterID);
             return View(semschoolyear);
         }
 

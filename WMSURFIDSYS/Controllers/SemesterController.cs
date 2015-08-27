@@ -117,22 +117,30 @@ namespace WMSURFIDSYS.Controllers
         // POST: Sem/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
+        public ActionResult DeleteConfirmed(Semester semester)
         {
             var db = DAL.DbContext.Create();
 
-            //Semester semester = db.Semesters.Get(id);
-            
-            bool IsDeleted = db.Semesters.Delete(id);
+            Semester sem = db.Semesters.Get(semester.Id);
+            try
+            {
+                bool IsDeleted = db.DeleteSemester(semester);
+                if (IsDeleted)
+                {
+                    ModelState.AddModelError("", "Unable to delete semester due to dependencies. Make semester is not currenlty in used.");
 
-            if (IsDeleted)
-            {
-                return RedirectToAction("Index");
+                }
+                else
+                {
+                    return RedirectToAction("Index");
+                }
             }
-            else
+            catch (Exception dex)
             {
-                return View();
+                //Log the error (uncomment dex variable name and add a line here to write a log.
+                return RedirectToAction("Delete", new { semester, saveChangesError = true });
             }
+            return View(sem);
         }
 
         protected override void Dispose(bool disposing)

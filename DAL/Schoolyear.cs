@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Dapper;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,6 +12,7 @@ namespace DAL
         public int Id { get; set; }
         public string YearFrom { get; set; }
         public string YearTo { get; set; }
+        [IgnorePropertyAttribute]
         public string SchoolYearRange
         {
             get

@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace WMSURFIDSYS.Client.Properties {
+namespace DAL.Properties {
     using System;
     
     
@@ -39,7 +39,7 @@ namespace WMSURFIDSYS.Client.Properties {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("WMSURFIDSYS.Client.Properties.Resources", typeof(Resources).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("DAL.Properties.Resources", typeof(Resources).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -61,12 +61,21 @@ namespace WMSURFIDSYS.Client.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        ///   Looks up a localized string similar to SELECT * FROM [WMSURFIDSYS].[dbo].[SemSchoolYears] WHERE SemesterId = @semesterId.
         /// </summary>
-        internal static System.Drawing.Bitmap photo_not_available {
+        internal static string Semester_CheckForDependecies {
             get {
-                object obj = ResourceManager.GetObject("photo not available", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
+                return ResourceManager.GetString("Semester_CheckForDependecies", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to SELECT 1 FROM [WMSURFIDSYS].[dbo].[TapLogs] WHERE StudentID = @studentId UNION 
+        ///SELECT 1 FROM [WMSURFIDSYS].[dbo].[TapLogs] WHERE StudentID = @studentId.
+        /// </summary>
+        internal static string Student_CheckForDependencies {
+            get {
+                return ResourceManager.GetString("Student_CheckForDependencies", resourceCulture);
             }
         }
     }

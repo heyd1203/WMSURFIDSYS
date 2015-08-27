@@ -123,7 +123,7 @@ namespace WMSURFIDSYS.Controllers
         {
             var db = DAL.DbContext.Create();
             Course course = db.Courses.Get(id);
-            bool IsDeleted = db.DeleteCourse(id);
+            bool IsDeleted = db.Courses.Delete(id);
             if (IsDeleted)
             {
                 return RedirectToAction("Index");

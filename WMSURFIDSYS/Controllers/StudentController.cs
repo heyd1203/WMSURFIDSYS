@@ -41,7 +41,8 @@ namespace WMSURFIDSYS.Controllers
             //var students = from s in db.Students select s;
                            
 
-            IEnumerable<DAL.Student> students = db.GetStudents().ToList();
+            //IEnumerable<DAL.Student> students = db.GetStudents().ToList();
+            IEnumerable<DAL.Student> students = db.Students.All().ToList();
 
             foreach(var student in students)
             {
@@ -72,7 +73,7 @@ namespace WMSURFIDSYS.Controllers
                     break;
             }
 
-           int pageSize = 3;
+           int pageSize = 10;
            int pageNumber = (page ?? 1);
            return View(students.ToPagedList(pageNumber, pageSize));
             //return View(students);
@@ -89,7 +90,8 @@ namespace WMSURFIDSYS.Controllers
             }
            
             //Select Code is found in WMSURFIDSYSDatabase.cs
-            var student = db.GetStudentByID(id);
+            //var student = db.GetStudentByID(id);
+            var student = db.Students.Get(id);
 
             if (student == null)
             {
@@ -111,7 +113,7 @@ namespace WMSURFIDSYS.Controllers
             }
            // var studentToUpdate = db.Students.Find(selectModel.id);
 
-            var studentToUpdate = db.SelectStudent(selectModel.id);
+            var studentToUpdate = db.Students.Get(selectModel.id);
 
             if (ModelState.IsValid)
             {
@@ -293,7 +295,7 @@ namespace WMSURFIDSYS.Controllers
             var studentToUpdate = db.Students.Get(id);
 
             if (TryUpdateModel(studentToUpdate, "",
-                   new string[] { "LastName", "FirstName", "MidName", "CourseId", "EPC" }))
+                   new string[] { "StudentID","LastName", "FirstName", "MidName", "CourseId", "EPC","EnrollmentDate" }))
             {
                 try
                 {
@@ -317,13 +319,13 @@ namespace WMSURFIDSYS.Controllers
                     }
                 }
 
-
                 catch (Exception /* dex */)
                 {
                     //Log the error (uncomment dex variable name and add a line here to write a log.
                     ModelState.AddModelError("", "Unable to save changes. Try again, and if the problem persists see your system administrator.");
                 }
             }
+            ViewBag.CourseId = new SelectList(db.Courses.All(), "Id", "CourseAbbv", studentToUpdate.Id);
             return View(studentToUpdate);
         }
 
@@ -371,7 +373,7 @@ namespace WMSURFIDSYS.Controllers
                     return View(student);
                 }
             }
-            catch (Exception/* dex */)
+            catch (Exception dex )
             {
                 //Log the error (uncomment dex variable name and add a line here to write a log.
                 return RedirectToAction("Delete", new { id = id, saveChangesError = true });

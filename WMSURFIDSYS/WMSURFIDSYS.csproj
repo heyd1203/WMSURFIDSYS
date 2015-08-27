@@ -45,10 +45,6 @@
       <HintPath>..\packages\Dapper.1.42\lib\net45\Dapper.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Dapper.Rainbow, Version=0.1.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Dapper.Rainbow.0.1.2\lib\net40\Dapper.Rainbow.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="Lu.AspnetIdentity.Dapper, Version=0.0.5427.35303, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Lu.AspnetIdentity.Dapper.0.0.3.3\lib\Lu.AspnetIdentity.Dapper.dll</HintPath>
       <Private>True</Private>
@@ -194,6 +190,7 @@
     <Compile Include="Controllers\SemesterController.cs" />
     <Compile Include="Controllers\SemSchoolYearController.cs" />
     <Compile Include="Controllers\StudentController.cs" />
+    <Compile Include="Controllers\TapLogController.cs" />
     <Compile Include="Controllers\UserAdminController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -298,6 +295,7 @@
     <Content Include="Views\SchoolYear\Details.cshtml" />
     <Content Include="Views\SchoolYear\Edit.cshtml" />
     <Content Include="Views\SchoolYear\Index.cshtml" />
+    <Content Include="Views\TapLog\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
