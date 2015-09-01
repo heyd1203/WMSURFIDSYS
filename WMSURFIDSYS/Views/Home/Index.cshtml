@@ -6,7 +6,7 @@
 
 <div class="jumbotron">
     <h1>Western Mindanao State Univeristy</h1>
-    <p class="lead">RFID based Gate Pass System</p>
+    <p class="lead">Identification System using RFID</p>
 </div>
 
 <h2>ID Tap Logs</h2>
@@ -22,7 +22,7 @@
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.DateTimeTap)
+            @Html.ActionLink("DateTimeTap", "Index", new { sortOrder = ViewBag.DateTimeTapSort })
         </th>
         <th>
             @Html.DisplayNameFor(model => model.Student.StudentID)

@@ -14,7 +14,6 @@ namespace WMSURFIDSYS.Controllers
         public ActionResult Index()
         {
             var db = DAL.DbContext.Create();
-            //var semSchoolyears = db.SemSchoolYears.Include(s => s.Schoolyear).Include(s => s.Sem);
 
             IEnumerable<DAL.SemSchoolYear> semschoolyears = db.SemSchoolYears.All().ToList();
 

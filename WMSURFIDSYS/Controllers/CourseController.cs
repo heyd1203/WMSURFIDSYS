@@ -1,23 +1,25 @@
-﻿using DAL;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net;
 using System.Web;
 using System.Web.Mvc;
-using Dapper;
+using DAL;
+using System.Net;
 
 namespace WMSURFIDSYS.Controllers
 {
-    public class CourseController : Controller
+    public class CourseController: Controller
     {
         // GET: Course
         public ActionResult Index()
         {
             var db = DAL.DbContext.Create();
 
-            return View(db.GetCourses());
+            IEnumerable<DAL.Course> courses = db.Courses.All().ToList();
+
+            return View(courses.ToList());
         }
+
 
         // GET: Course/Details/5
         public ActionResult Details(int id)
@@ -47,7 +49,7 @@ namespace WMSURFIDSYS.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "CourseID,CourseName,CourseAbbv")] Course course)
+        public ActionResult Create(Course course)
         {
             var db = DAL.DbContext.Create();
             if (ModelState.IsValid)
@@ -93,7 +95,7 @@ namespace WMSURFIDSYS.Controllers
             var db = DAL.DbContext.Create();
             if (ModelState.IsValid)
             {
-                db.UpdateCourse(course);
+                db.Courses.Update(course.Id,course);
                 return RedirectToAction("Index");
             }
 
