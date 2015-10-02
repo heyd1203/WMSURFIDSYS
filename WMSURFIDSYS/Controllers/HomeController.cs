@@ -18,6 +18,7 @@ namespace WMSURFIDSYS.Controllers
 
             //Must displya in descending order
             IEnumerable<DAL.TapLog> taplogs = db.TapLogs.All().ToList();
+            taplogs = taplogs.OrderByDescending(t => t.DateTimeTap);
 
             if (!String.IsNullOrEmpty(searchString))
             {

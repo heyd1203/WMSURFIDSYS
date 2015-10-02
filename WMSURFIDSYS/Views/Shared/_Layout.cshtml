@@ -34,7 +34,16 @@
                    {
                         <li>@Html.ActionLink("RolesAdmin", "Index", "RolesAdmin")</li>
                         <li>@Html.ActionLink("UsersAdmin", "Index", "UsersAdmin")</li>
-                        <li>@Html.ActionLink("Settings", "Index", "SemSchoolYear")</li>
+                        <li class="dropdown">
+                            <a class="dropdown-toggle" data-toggle="dropdown">
+                                @Html.ActionLink("Settings", "Index", "SemSchoolYear")
+                                <span class="caret"></span>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li>@Html.ActionLink("School Year", "Index", "schoolyear")</li>
+                                <li>@Html.ActionLink("Semester", "Index", "semester")</li>
+                            </ul>
+                        </li>
                         <li>@Html.ActionLink("Colleges", "Index", "Colleges")</li>
                         <li>@Html.ActionLink("Courses", "Index", "Course")</li>
                         <li>@Html.ActionLink("Students", "Index", "Student")</li>
