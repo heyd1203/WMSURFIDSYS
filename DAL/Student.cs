@@ -31,7 +31,7 @@ namespace DAL
         public string EPC { get; set; }
 
         [DataType(DataType.Date)]
-        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd-MM-yyyy}")]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyy-MM-dd}")]
         public DateTime? EnrollmentDate { get; set; }
 
         public byte[] Image { get; set; }

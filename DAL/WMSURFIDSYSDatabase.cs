@@ -186,7 +186,7 @@ namespace DAL
             var taplogs = this.Query<TapLog, Student, TapLog>("SELECT [dbo].[TapLogs].*, [dbo].[Students].* FROM [dbo].[TapLogs] INNER JOIN" +
                  "[dbo].[Students] ON [dbo].[TapLogs].[StudentID] = [dbo].[Students].[Id]" +
                  "WHERE ([dbo].[Students].[StudentID] = @StudentID) OR ([dbo].[Students].[LastName] like '%'+ @LastName +'%') OR" +
-                 " ([dbo].Students.FirstName like '%'+ @FirstName +'%') ORDER BY DESC", (taplog, student) =>
+                 " ([dbo].Students.FirstName like '%'+ @FirstName +'%') ORDER BY ([dbo].[TapLogs].[DateTimeTap])  DESC", (taplog, student) =>
                  {
                      taplog.Student = student;
                      return taplog;
