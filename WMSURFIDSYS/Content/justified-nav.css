@@ -13,8 +13,13 @@
 
 /* Main marketing message and sign up button */
 .jumbotron {
-  text-align: center;
-  background-color: transparent;
+   padding: 30px;
+  margin-bottom: 30px;
+  font-size: 21px;
+  font-weight: 200;
+  line-height: 2.1428571435;
+  color: inherit;
+  background-color: #eeeeee;
 }
 .jumbotron .btn {
   font-size: 21px;
@@ -29,6 +34,7 @@
   background-color: #eee;
   border-radius: 5px;
   border: 1px solid #ccc;
+  width: 100%;
 }
 .nav-justified > li > a {
   padding-top: 15px;

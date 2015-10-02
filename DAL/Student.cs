@@ -18,20 +18,25 @@ namespace DAL
         [DisplayName("Middle Initial")]
         [StringLength(2, ErrorMessage = "Middle name cannot be longer than 50 characters.")]
         public string MidName { get; set; }
-        public int CourseID { get; set; }
+        public int CollegeID { get; set; }
 
         [IgnorePropertyAttribute]//Must be added so that it will not check if the column is present in the database
+        public virtual College College { get; set; }
+        public int CourseID { get; set; }
+
+        [IgnorePropertyAttribute]
         public virtual Course Course { get; set;}
         [Required(ErrorMessage = "Please input the EPC")]
         [StringLength(24, MinimumLength = 24, ErrorMessage = "EPC should be 24 characters long.")]
         public string EPC { get; set; }
 
         [DataType(DataType.Date)]
-        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyy-MM-dd}")]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd-MM-yyyy}")]
         public DateTime? EnrollmentDate { get; set; }
 
         public byte[] Image { get; set; }
 
         public int Id { get; set; }
+        public string Message { get; set; }
     }
 }

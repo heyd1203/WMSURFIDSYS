@@ -16,8 +16,6 @@ namespace WMSURFIDSYS.Controllers
     public class StudentController : Controller
     {
         //[Authorize(Roles = "Admin")]
-
- 
         // GET: Student
         public ActionResult Index(string sortOrder, string currentFilter, string searchString, int? page)
         {
@@ -148,6 +146,7 @@ namespace WMSURFIDSYS.Controllers
             if (student != null)
             {
                 student.Course = db.Courses.Get(student.CourseID);
+                student.College = db.Colleges.Get(student.CollegeID);
             }
 
             if (student == null)
@@ -166,9 +165,17 @@ namespace WMSURFIDSYS.Controllers
             //ViewData["courses"] = courses;
 
             var courses = new List<SelectListItem>();
+            var colleges = new List<SelectListItem>();
             courses.Add(new SelectListItem()
             {
                 Text = "Select a course",
+                Value = "0",
+                Selected = true
+            });
+
+            colleges.Add(new SelectListItem()
+            {
+                Text = "Select a college",
                 Value = "0",
                 Selected = true
             });
@@ -179,8 +186,15 @@ namespace WMSURFIDSYS.Controllers
                                  Text = c.CourseAbbv,
                                  Value = c.Id.ToString()
                              });
+            colleges.AddRange(from c in db.Colleges.All()
+                             select new SelectListItem()
+                             {
+                                 Text = c.CollegeName,
+                                 Value = c.Id.ToString()
+                             });
 
             ViewBag.CourseId = courses;
+            ViewBag.CollegeId = colleges;
 
             return View();
         }
@@ -223,6 +237,7 @@ namespace WMSURFIDSYS.Controllers
 
                 //ViewBag.Id = new SelectList(db.GetCourses().Distinct().ToList(), "Id", "CourseAbbv");
                 ViewBag.CourseId = new SelectList(db.Courses.All(), "Id", "CourseAbbv", student.Id);
+                ViewBag.CollegeId = new SelectList(db.Colleges.All(), "Id", "CollegeName", student.Id);
 
             return View(student);
         }
@@ -267,6 +282,7 @@ namespace WMSURFIDSYS.Controllers
            if(student != null)
             {
                student.Course = db.Courses.Get(student.CourseID);
+               student.College = db.Colleges.Get(student.CollegeID);
             }
 
            else
@@ -275,6 +291,7 @@ namespace WMSURFIDSYS.Controllers
             }
 
             ViewBag.CourseId = new SelectList(db.Courses.All(), "Id", "CourseAbbv", student.Id);
+            ViewBag.CollegeId = new SelectList(db.Colleges.All(), "Id", "CollegeName", student.Id);
             return View(student);
         }
 
@@ -295,7 +312,7 @@ namespace WMSURFIDSYS.Controllers
             var studentToUpdate = db.Students.Get(id);
 
             if (TryUpdateModel(studentToUpdate, "",
-                   new string[] { "StudentID","LastName", "FirstName", "MidName", "CourseId", "EPC","EnrollmentDate" }))
+                   new string[] { "StudentID","LastName", "FirstName", "MidName","CollegeId", "CourseId", "EPC","EnrollmentDate" }))
             {
                 try
                 {
@@ -305,7 +322,6 @@ namespace WMSURFIDSYS.Controllers
                         {
                             studentToUpdate.Image = reader.ReadBytes(upload.ContentLength);
                         }
-
 
                         db.Students.Update(studentToUpdate.Id, studentToUpdate);
 
@@ -326,6 +342,7 @@ namespace WMSURFIDSYS.Controllers
                 }
             }
             ViewBag.CourseId = new SelectList(db.Courses.All(), "Id", "CourseAbbv", studentToUpdate.Id);
+            ViewBag.CollegeId = new SelectList(db.Colleges.All(), "Id", "CollegeName", studentToUpdate.Id);
             return View(studentToUpdate);
         }
 
@@ -343,6 +360,7 @@ namespace WMSURFIDSYS.Controllers
             if (student != null)
             {
                 student.Course = db.Courses.Get(student.CourseID);
+                student.College = db.Colleges.Get(student.CollegeID);
             }
             if (student == null)
             {

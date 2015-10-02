@@ -69,5 +69,15 @@ namespace WMSURFIDSYS.Client.Properties {
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap WinForm_BG_v2 {
+            get {
+                object obj = ResourceManager.GetObject("WinForm BG v2", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
     }
 }

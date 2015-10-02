@@ -86,16 +86,19 @@ namespace WMSURFIDSYS.Client
                         {
                             //display data
                             DisplayStudentInfo(existEPC);
+                            //record tap logs
+                            db.TapLogs.Insert(new TapLog
+                            {
+                                DateTimeTap = DateTime.Now,
+                                StudentID = existEPC.Id
+                            });
                         }
 
                         else 
                         {
                             DisplayNotEnrolled();
                         }
-                      
-                        //record tap logs
-                        db.TapLogs.Insert(new TapLog { DateTimeTap =DateTime.Now, StudentID = existEPC.Id
-                        });
+                                             
                     }
                     else
                     {
@@ -127,6 +130,7 @@ namespace WMSURFIDSYS.Client
             //get course
             var students = db.Students.Get(student.Id);
             students.Course = db.Courses.Get(student.CourseID);
+            students.College = db.Colleges.Get(student.CollegeID);
             
 
             if (this.InvokeRequired)
@@ -142,6 +146,9 @@ namespace WMSURFIDSYS.Client
             FName.Text = student.FirstName.ToString();
             MName.Text = student.MidName.ToString();
             CAbbv.Text = students.Course.CourseAbbv.ToString();
+            College.Text = student.College.CollegeName.ToString();
+            Message.Text = student.Message.ToString();
+
            // CourseAbbv.Text = students.Course.CourseAbbv.ToString();
 
             //display image
@@ -193,6 +200,21 @@ namespace WMSURFIDSYS.Client
         }
 
         private void label7_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void StudID_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void MName_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label1_Click(object sender, EventArgs e)
         {
 
         }

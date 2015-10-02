@@ -25,7 +25,17 @@ namespace WMSURFIDSYS
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
-                      "~/Content/site.css"));
+                      "~/Content/site.css",
+                      "~/Content/justified-nav.css"));
+
+            bundles.Add(new ScriptBundle("~/bundles/jqueryui").Include(
+            "~/Scripts/jquery-ui-{version}.js",
+            "~/Scripts/jquery-ui.unobtrusive-{version}.js"));
+
+            bundles.Add(new StyleBundle("~/Content/themes/base/css").Include(
+        "~/Content/themes/base/jquery.ui.core.css",
+        "~/Content/themes/base/jquery.ui.datepicker.css",
+        "~/Content/themes/base/jquery.ui.theme.css")); 
         }
     }
 }

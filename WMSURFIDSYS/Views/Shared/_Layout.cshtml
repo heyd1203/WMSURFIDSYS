@@ -4,8 +4,15 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title - Western Mindanao State University</title>
-    @Styles.Render("~/Content/css")
-    @Scripts.Render("~/bundles/modernizr")
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+        @Styles.Render("~/Content/css")
+        @Styles.Render("~/Content/themes/base/css")
+        @Scripts.Render("~/bundles/modernizr")
+    <link href="~/Content/themes/base/jquery-ui.css" rel="stylesheet" />
+        @Scripts.Render("~/bundles/jquery")
+        @Scripts.Render("~/bundles/jqueryval")
+        @Scripts.Render("~/bundles/jqueryui")
+   
 
 </head>
 <body>
@@ -23,19 +30,25 @@
                 <ul class="nav navbar-nav">
                     @*<li>@Html.ActionLink("Home", "Index", "Home")</li>*@
                    
-                   *@if (Request.IsAuthenticated && User.IsInRole("Admin"))
+                   @if (Request.IsAuthenticated && User.IsInRole("Admin"))
                    {
                         <li>@Html.ActionLink("RolesAdmin", "Index", "RolesAdmin")</li>
                         <li>@Html.ActionLink("UsersAdmin", "Index", "UsersAdmin")</li>
                         <li>@Html.ActionLink("Settings", "Index", "SemSchoolYear")</li>
-                        <li>@Html.ActionLink("Students", "Index", "Student")</li>
+                        <li>@Html.ActionLink("Colleges", "Index", "Colleges")</li>
                         <li>@Html.ActionLink("Courses", "Index", "Course")</li>
+                        <li>@Html.ActionLink("Students", "Index", "Student")</li>
+                       
                     }
                     
                     @if (Request.IsAuthenticated && User.IsInRole("UPress"))
                     {
                         <li>@Html.ActionLink("Students", "Index", "Student")</li>
-                        <li>@Html.ActionLink("Courses", "Index", "Course")</li>
+                    }
+                    
+                    @if (Request.IsAuthenticated && User.IsInRole("MISTO"))
+                    {
+                        <li>@Html.ActionLink("Students", "Index", "Student")</li>
                     }
                 </ul>
                 @Html.Partial("_LoginPartial")
@@ -46,7 +59,7 @@
         @RenderBody()
         <hr />
         <footer>
-            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
+            <p>&copy; @DateTime.Now.Year - Western Mindanao State University</p>
         </footer>
     </div>
 

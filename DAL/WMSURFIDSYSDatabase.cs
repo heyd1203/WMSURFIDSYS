@@ -23,6 +23,7 @@ namespace DAL
 
         public Table<Student> Students { get; set; }
         public Table<Course> Courses { get; set; }
+        public Table<College> Colleges { get; set; }
         public Table<Semester> Semesters { get; set; }
         public Table<SchoolYear> SchoolYears { get; set; }
         public Table<SemSchoolYear> SemSchoolYears { get; set; }
@@ -185,7 +186,7 @@ namespace DAL
             var taplogs = this.Query<TapLog, Student, TapLog>("SELECT [dbo].[TapLogs].*, [dbo].[Students].* FROM [dbo].[TapLogs] INNER JOIN" +
                  "[dbo].[Students] ON [dbo].[TapLogs].[StudentID] = [dbo].[Students].[Id]" +
                  "WHERE ([dbo].[Students].[StudentID] = @StudentID) OR ([dbo].[Students].[LastName] like '%'+ @LastName +'%') OR" +
-                 " ([dbo].Students.FirstName like '%'+ @FirstName +'%')", (taplog, student) =>
+                 " ([dbo].Students.FirstName like '%'+ @FirstName +'%') ORDER BY DESC", (taplog, student) =>
                  {
                      taplog.Student = student;
                      return taplog;
