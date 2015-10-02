@@ -16,7 +16,6 @@ namespace WMSURFIDSYS.Controllers
             int studentId;
             int.TryParse(searchString, out studentId);
 
-            //Must displya in descending order
             IEnumerable<DAL.TapLog> taplogs = db.TapLogs.All().ToList();
             taplogs = taplogs.OrderByDescending(t => t.DateTimeTap);
 

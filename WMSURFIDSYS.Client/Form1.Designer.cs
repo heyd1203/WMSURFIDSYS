@@ -40,7 +40,7 @@
             this.ShowSY = new System.Windows.Forms.Label();
             this.ShowSem = new System.Windows.Forms.Label();
             this.Error = new System.Windows.Forms.Label();
-            this.ColName = new System.Windows.Forms.Label();
+            this.College = new System.Windows.Forms.Label();
             this.label = new System.Windows.Forms.Label();
             this.Message = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.image)).BeginInit();
@@ -185,18 +185,18 @@
             this.Error.TabIndex = 28;
             this.Error.Text = "Student not currenlty enrolled";
             // 
-            // ColName
+            // College
             // 
-            this.ColName.AutoSize = true;
-            this.ColName.BackColor = System.Drawing.Color.Transparent;
-            this.ColName.Font = new System.Drawing.Font("Georgia", 26.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.ColName.ForeColor = System.Drawing.Color.Gainsboro;
-            this.ColName.Location = new System.Drawing.Point(283, 237);
-            this.ColName.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.ColName.Name = "ColName";
-            this.ColName.Size = new System.Drawing.Size(149, 41);
-            this.ColName.TabIndex = 29;
-            this.ColName.Text = "College";
+            this.College.AutoSize = true;
+            this.College.BackColor = System.Drawing.Color.Transparent;
+            this.College.Font = new System.Drawing.Font("Georgia", 26.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.College.ForeColor = System.Drawing.Color.Gainsboro;
+            this.College.Location = new System.Drawing.Point(283, 237);
+            this.College.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.College.Name = "College";
+            this.College.Size = new System.Drawing.Size(149, 41);
+            this.College.TabIndex = 29;
+            this.College.Text = "College";
             // 
             // label
             // 
@@ -221,10 +221,10 @@
             this.Message.Location = new System.Drawing.Point(288, 351);
             this.Message.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.Message.Name = "Message";
-            this.Message.Size = new System.Drawing.Size(344, 90);
+            this.Message.Size = new System.Drawing.Size(366, 108);
             this.Message.TabIndex = 31;
-            this.Message.Text = "                                                                                 " +
-    "   \r\n\r\n\r\n\r\n\r\n";
+            this.Message.Text = "Message                                                           Message\r\n\r\n\r\n\r\n" +
+    "\r\nMessage";
             // 
             // WMSURFIDSYS
             // 
@@ -236,7 +236,7 @@
             this.ClientSize = new System.Drawing.Size(739, 540);
             this.Controls.Add(this.Message);
             this.Controls.Add(this.label);
-            this.Controls.Add(this.ColName);
+            this.Controls.Add(this.College);
             this.Controls.Add(this.Error);
             this.Controls.Add(this.ShowSY);
             this.Controls.Add(this.ShowSem);
@@ -270,7 +270,7 @@
         private System.Windows.Forms.Label ShowSY;
         private System.Windows.Forms.Label ShowSem;
         private System.Windows.Forms.Label Error;
-        private System.Windows.Forms.Label ColName;
+        private System.Windows.Forms.Label College;
         private System.Windows.Forms.Label label;
         private System.Windows.Forms.Label Message;
     }

@@ -80,6 +80,8 @@ namespace WMSURFIDSYS.Client
 
                     if (existEPC != null)
                     {
+                        
+
                         if (ValidateEnrollmentDate(existEPC, validenrollmentdate))
                         {
                             //display data
@@ -94,7 +96,6 @@ namespace WMSURFIDSYS.Client
 
                         else 
                         {
-                            DisplayStudentInfo(existEPC);
                             DisplayNotEnrolled();
                         }
                                              
@@ -131,6 +132,7 @@ namespace WMSURFIDSYS.Client
             students.Course = db.Courses.Get(student.CourseID);
             students.College = db.Colleges.Get(student.CollegeID);
             
+
             if (this.InvokeRequired)
             {
                 this.Invoke(new Action<Student>(DisplayStudentInfo), student);
@@ -144,11 +146,15 @@ namespace WMSURFIDSYS.Client
             FName.Text = student.FirstName.ToString();
             MName.Text = student.MidName.ToString();
             CAbbv.Text = students.Course.CourseAbbv.ToString();
-            //ColName.Text = student.College.CollegeName.ToString();
-            //Message.Text = student.Message.ToString();
+            College.Text = student.College.CollegeName.ToString();
+            Message.Text = student.Message.ToString();
+
+           // CourseAbbv.Text = students.Course.CourseAbbv.ToString();
 
             //display image
-            image.Image = byteArrayToImage(student.Image);         
+            image.Image = byteArrayToImage(student.Image);
+
+            
         }
 
         private void DisplayNotValid()
