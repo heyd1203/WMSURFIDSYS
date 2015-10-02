@@ -1,0 +1,115 @@
+﻿@model WMSURFIDSYS.ViewModel.DeactivateTagData
+
+
+@{
+    ViewBag.Title = "Deactivate";
+}
+
+<h2>Deactivate Tag</h2>
+
+<div>
+    <h4>Student</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            Photo
+        </dt>
+        <dd>
+            <img src="~/File?id=@Model.Student.Id" alt="photo" style="width: 150px; height: 150px;" />
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Student.StudentID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Student.StudentID)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Student.LastName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Student.LastName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Student.FirstName)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Student.FirstName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Student.MidName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Student.MidName)
+        </dd>
+
+        <dt>
+            College
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.College.CollegeName)
+        </dd>
+        <dt>
+            Course
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Course.CourseAbbv)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Student.EPC)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Student.EPC)
+        </dd>
+
+    </dl>
+</div>
+@if (Model.Student.EPC.IsEmpty() == false)
+{
+    <h4>Deactivation Tag Details</h4>
+    using (Html.BeginForm("Deactivate", "Student", null, FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        @Html.AntiForgeryToken()
+        <div class="form-horizontal">
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.TagHistory.DeactivationReasonID, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.DropDownList("TagHistoryId", null, htmlAttributes: new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.TagHistory.DeactivationReasonID, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.TagHistory.Remarks, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.TextAreaFor(model => model.TagHistory.Remarks, 5, 105, new { @style = "resize: none;" })
+                    @Html.ValidationMessageFor(model => model.TagHistory.Remarks, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Deactivate" class="btn btn-default" />
+                </div>
+            </div>
+
+        </div>
+    }
+}
+@if (Model.Student.EPC.IsEmpty() == true)
+{
+    @Html.Label("Cannot Deactivate since EPC is empty", htmlAttributes: new {size = 20, @class = "text-danger" })   
+    <br />
+}
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Student.Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

@@ -28,19 +28,14 @@
                         <li>@Html.ActionLink("RolesAdmin", "Index", "RolesAdmin")</li>
                         <li>@Html.ActionLink("UsersAdmin", "Index", "UsersAdmin")</li>
                         <li>@Html.ActionLink("Settings", "Index", "SemSchoolYear")</li>
-                        <li>@Html.ActionLink("Colleges", "Index", "College")</li>
+                        <li>@Html.ActionLink("Students", "Index", "Student")</li>
                         <li>@Html.ActionLink("Courses", "Index", "Course")</li>
-                        <li>@Html.ActionLink("Students", "Index", "Student")</li>
-                   }
-                    
-                    *@if (Request.IsAuthenticated && User.IsInRole("UPress"))
-                    {
-                        <li>@Html.ActionLink("Students", "Index", "Student")</li>
                     }
                     
-                    *@if (Request.IsAuthenticated && User.IsInRole("MISTO"))
+                    @if (Request.IsAuthenticated && User.IsInRole("UPress"))
                     {
                         <li>@Html.ActionLink("Students", "Index", "Student")</li>
+                        <li>@Html.ActionLink("Courses", "Index", "Course")</li>
                     }
                 </ul>
                 @Html.Partial("_LoginPartial")
@@ -51,7 +46,7 @@
         @RenderBody()
         <hr />
         <footer>
-            <p>&copy; @DateTime.Now.Year - Western Mindanao State University</p>
+            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
         </footer>
     </div>
 

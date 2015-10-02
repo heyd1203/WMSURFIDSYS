@@ -22,7 +22,6 @@ namespace DAL
         }
 
         public Table<Student> Students { get; set; }
-        public Table<College> Colleges { get; set; } 
         public Table<Course> Courses { get; set; }
         public Table<Semester> Semesters { get; set; }
         public Table<SchoolYear> SchoolYears { get; set; }
@@ -35,7 +34,34 @@ namespace DAL
             return new SqlConnection(ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString);
         }
 
-       
+        public IEnumerable<Student> GetStudents()
+        {
+            try
+            {
+                using (var cnn = CreateConnection())
+                {
+                    cnn.Open();
+                    var students = cnn.Query<Student>("select * from students");
+
+                    return students;
+                }
+            }
+
+            catch (Exception x)
+            {
+                throw x;
+            }
+        }
+
+        public Student GetStudentByID(int id)
+        {
+            Student student = this.Query<Student>("select * from students where id = @id", new { id = id })
+                .FirstOrDefault();
+
+
+            return student;
+        }
+
         public void EnrollmentDateUpdate(int Id, DateTime enrollmentDate)
         {
             var sqlQuery =
@@ -50,8 +76,24 @@ namespace DAL
             }
         }
        
-       
-        public bool UpdateCourse(College course)
+        public IEnumerable<Course> GetCourses()
+        {
+            try
+            {
+                using (var cnn = CreateConnection())
+                {
+                    cnn.Open();
+                    var courses = cnn.Query<Course>("select * from courses");
+                    return courses;
+                }
+            }
+            catch (Exception x)
+            {
+                throw x;
+            }
+        }
+
+        public bool UpdateCourse(Course course)
         {
             try
             {
@@ -62,8 +104,8 @@ namespace DAL
 
                     cnn.Execute(sqlQuery, new
                     {
-                        CourseName = course.CollegeName,
-                        CourseAbbv = course.CollegeAbbv,
+                        course.CourseName,
+                        course.CourseAbbv,
                         course.Id
                     });
 

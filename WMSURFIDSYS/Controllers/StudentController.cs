@@ -15,7 +15,9 @@ namespace WMSURFIDSYS.Controllers
 {
     public class StudentController : Controller
     {
-        [Authorize(Roles = "Admin,UPress,MISTO")]
+        //[Authorize(Roles = "Admin")]
+
+ 
         // GET: Student
         public ActionResult Index(string sortOrder, string currentFilter, string searchString, int? page)
         {
@@ -36,12 +38,15 @@ namespace WMSURFIDSYS.Controllers
 
             ViewBag.CurrentFilter = searchString;
 
+            //var students = from s in db.Students select s;
+                           
+
+            //IEnumerable<DAL.Student> students = db.GetStudents().ToList();
             IEnumerable<DAL.Student> students = db.Students.All().ToList();
 
             foreach(var student in students)
             {
-                student.Course = db.Courses.Get(student.CourseID);
-                student.College = db.Colleges.Get(student.CollegeID);
+                student.Course =  db.Courses.Get(student.CourseID);
             }
 
 
@@ -75,7 +80,6 @@ namespace WMSURFIDSYS.Controllers
         }
 
         //Display Student Details and Enrollment Date
-        [Authorize(Roles = "Admin,MISTO")]
         public ActionResult Select(int id)
         {
             var db = DAL.DbContext.Create();
@@ -97,7 +101,6 @@ namespace WMSURFIDSYS.Controllers
             return View(student);
         }
 
-        [Authorize(Roles = "Admin,MISTO")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Select(SelectModel selectModel)
@@ -128,7 +131,6 @@ namespace WMSURFIDSYS.Controllers
             public DateTime EnrollmentDate { get; set; }
         }
 
-        [Authorize(Roles = "Admin,UPress,MISTO")]
         // GET: Student/Details/5
         public ActionResult Details(int id)
         {
@@ -145,7 +147,6 @@ namespace WMSURFIDSYS.Controllers
 
             if (student != null)
             {
-                student.College = db.Colleges.Get(student.CollegeID);
                 student.Course = db.Courses.Get(student.CourseID);
             }
 
@@ -156,10 +157,7 @@ namespace WMSURFIDSYS.Controllers
             return View(student);
         }
 
-
         // GET: Student/Create
-        [Authorize(Roles = "Admin,UPress")]
-
         public ActionResult Create()
         {
             var db = DAL.DbContext.Create();
@@ -167,14 +165,6 @@ namespace WMSURFIDSYS.Controllers
             //IEnumerable<SelectListItem> courses = new SelectList(db.GetCourses().Distinct().ToList(), "CourseID", "CourseAbbv");
             //ViewData["courses"] = courses;
 
-            var colleges = new List<SelectListItem>();
-            colleges.Add(new SelectListItem()
-            {
-                Text = "Select a college",
-                Value = "0",
-                Selected = true
-            });
-                    
             var courses = new List<SelectListItem>();
             courses.Add(new SelectListItem()
             {
@@ -183,13 +173,6 @@ namespace WMSURFIDSYS.Controllers
                 Selected = true
             });
 
-            colleges.AddRange(from c in db.Colleges.All()
-                             select new SelectListItem()
-                             {
-                                 Text = c.CollegeAbbv,
-                                 Value = c.Id.ToString()
-                             });
-
             courses.AddRange(from c in db.Courses.All()
                              select new SelectListItem()
                              {
@@ -197,8 +180,7 @@ namespace WMSURFIDSYS.Controllers
                                  Value = c.Id.ToString()
                              });
 
-            ViewBag.CollegeId = colleges;
-             ViewBag.CourseId = courses;
+            ViewBag.CourseId = courses;
 
             return View();
         }
@@ -206,7 +188,6 @@ namespace WMSURFIDSYS.Controllers
         // POST: Student/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [Authorize(Roles = "Admin,UPress")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create(Student student, HttpPostedFileBase upload)
@@ -240,8 +221,7 @@ namespace WMSURFIDSYS.Controllers
                 }
             }
 
-            //ViewBag.Id = new SelectList(db.GetCourses().Distinct().ToList(), "Id", "CourseAbbv");
-                ViewBag.CollegeId = new SelectList(db.Colleges.All(), "Id", "CollegeAbbv", student.Id);
+                //ViewBag.Id = new SelectList(db.GetCourses().Distinct().ToList(), "Id", "CourseAbbv");
                 ViewBag.CourseId = new SelectList(db.Courses.All(), "Id", "CourseAbbv", student.Id);
 
             return View(student);
@@ -268,11 +248,11 @@ namespace WMSURFIDSYS.Controllers
                 isValid = false;
                 ModelState.AddModelError("", "Unable to save changes. EPC already exist.");
             }
+
             return isValid;
         }
 
         // GET: Student/Edit/5
-        [Authorize(Roles = "Admin,UPress")]
         public ActionResult Edit(int id)
         {
             var db = DAL.DbContext.Create();
@@ -286,7 +266,6 @@ namespace WMSURFIDSYS.Controllers
 
            if(student != null)
             {
-               student.College = db.Colleges.Get(student.CollegeID);
                student.Course = db.Courses.Get(student.CourseID);
             }
 
@@ -295,15 +274,13 @@ namespace WMSURFIDSYS.Controllers
                 return HttpNotFound();
             }
 
-            ViewBag.CourseId = new SelectList(db.Courses.All(), "Id", "CourseAbbv", student.CourseID);
-            ViewBag.CollegeId = new SelectList(db.Colleges.All(), "Id", "CollegeAbbv", student.CollegeID);
+            ViewBag.CourseId = new SelectList(db.Courses.All(), "Id", "CourseAbbv", student.Id);
             return View(student);
         }
 
         // POST: Student/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [Authorize(Roles = "Admin,UPress")]
         [HttpPost, ActionName("Edit")]
         [ValidateAntiForgeryToken]
         public ActionResult EditPost(int id, HttpPostedFileBase upload)
@@ -318,7 +295,7 @@ namespace WMSURFIDSYS.Controllers
             var studentToUpdate = db.Students.Get(id);
 
             if (TryUpdateModel(studentToUpdate, "",
-                   new string[] { "StudentID","LastName", "FirstName", "MidName", "CollegeId","CourseId", "EPC","EnrollmentDate" }))
+                   new string[] { "StudentID","LastName", "FirstName", "MidName", "CourseId", "EPC","EnrollmentDate" }))
             {
                 try
                 {
@@ -348,14 +325,11 @@ namespace WMSURFIDSYS.Controllers
                     ModelState.AddModelError("", "Unable to save changes. Try again, and if the problem persists see your system administrator.");
                 }
             }
-            ViewBag.CollegeId = new SelectList(db.Colleges.All(), "Id", "CollegeAbbv", studentToUpdate.Id);
             ViewBag.CourseId = new SelectList(db.Courses.All(), "Id", "CourseAbbv", studentToUpdate.Id);
-
             return View(studentToUpdate);
         }
 
         // GET: Student/Delete/5
-        [Authorize(Roles = "Admin")]
         public ActionResult Delete(int id)
         {
             var db = DAL.DbContext.Create();
@@ -368,7 +342,6 @@ namespace WMSURFIDSYS.Controllers
 
             if (student != null)
             {
-                student.College = db.Colleges.Get(student.CollegeID);
                 student.Course = db.Courses.Get(student.CourseID);
             }
             if (student == null)
@@ -379,9 +352,9 @@ namespace WMSURFIDSYS.Controllers
         }
 
         // POST: Student/Delete/5
-        [Authorize(Roles = "Admin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
+
         [ActionName ("Delete")]
         public ActionResult DeletePost(int id)
         {

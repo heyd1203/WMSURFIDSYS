@@ -65,14 +65,6 @@ namespace WMSURFIDSYS.Models
     public class RegisterViewModel
     {
         [Required]
-        [Display(Name = "Last Name")]
-        public string LName { get; set; }
-
-        [Required]
-        [Display(Name = "First Name")]
-        public string FName { get; set; }
-
-        [Required]
         [EmailAddress]
         [Display(Name = "Email")]
         public string Email { get; set; }
