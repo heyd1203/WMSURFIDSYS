@@ -5,65 +5,55 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title - Western Mindanao State University</title>
     <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
-        @Styles.Render("~/Content/css")
-        @Styles.Render("~/Content/themes/base/css")
-        @Scripts.Render("~/bundles/modernizr")
+    @Styles.Render("~/Content/css")
+    @Styles.Render("~/Content/themes/base/css")
+    @Scripts.Render("~/bundles/modernizr")
     <link href="~/Content/themes/base/jquery-ui.css" rel="stylesheet" />
-        @Scripts.Render("~/bundles/jquery")
-        @Scripts.Render("~/bundles/jqueryval")
-        @Scripts.Render("~/bundles/jqueryui")
-   
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/jqueryui")
+
 
 </head>
 <body>
-    <div class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                @Html.ActionLink("WMSURFIDSYS", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
-            </div>
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    @*<li>@Html.ActionLink("Home", "Index", "Home")</li>*@
-                   
-                   @if (Request.IsAuthenticated && User.IsInRole("Admin"))
-                   {
-                        <li>@Html.ActionLink("RolesAdmin", "Index", "RolesAdmin")</li>
-                        <li>@Html.ActionLink("UsersAdmin", "Index", "UsersAdmin")</li>
-                        <li class="dropdown">
-                            <a class="dropdown-toggle" data-toggle="dropdown">
-                                @Html.ActionLink("Settings", "Index", "SemSchoolYear")
-                                <span class="caret"></span>
-                            </a>
-                            <ul class="dropdown-menu">
-                                <li>@Html.ActionLink("School Year", "Index", "schoolyear")</li>
-                                <li>@Html.ActionLink("Semester", "Index", "semester")</li>
-                            </ul>
-                        </li>
-                        <li>@Html.ActionLink("Colleges", "Index", "Colleges")</li>
-                        <li>@Html.ActionLink("Courses", "Index", "Course")</li>
-                        <li>@Html.ActionLink("Students", "Index", "Student")</li>
-                       
-                    }
-                    
-                    @if (Request.IsAuthenticated && User.IsInRole("UPress"))
-                    {
-                        <li>@Html.ActionLink("Students", "Index", "Student")</li>
-                    }
-                    
-                    @if (Request.IsAuthenticated && User.IsInRole("MISTO"))
-                    {
-                        <li>@Html.ActionLink("Students", "Index", "Student")</li>
-                    }
-                </ul>
-                @Html.Partial("_LoginPartial")
-            </div>
+    <div class="container">
+        <div class="masthead">
+            <h3 class="text-muted">@Html.ActionLink("WMSURFIDSYS", "Index", "Home")</h3>
+            <ul class="nav nav-justified">
+                @*<li>@Html.ActionLink("Home", "Index", "Home")</li>*@
+
+                @if (Request.IsAuthenticated && User.IsInRole("Admin"))
+                {
+                    <li>@Html.ActionLink("RolesAdmin", "Index", "RolesAdmin")</li>
+                    <li>@Html.ActionLink("UsersAdmin", "Index", "UsersAdmin")</li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Settings <span class="caret"></span></a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li>@Html.ActionLink("School Year", "Index", "schoolyear")</li>
+                            <li>@Html.ActionLink("Semester", "Index", "semester")</li>
+                            <li class="divider"></li>
+                            @Html.ActionLink("SemSchoolYear", "Index", "SemSchoolYear")
+                        </ul>
+                    </li>
+                    <li>@Html.ActionLink("Colleges", "Index", "Colleges")</li>
+                    <li>@Html.ActionLink("Courses", "Index", "Course")</li>
+                    <li>@Html.ActionLink("Students", "Index", "Student")</li>
+                }
+
+                @if (Request.IsAuthenticated && User.IsInRole("UPress"))
+                {
+                    <li>@Html.ActionLink("Students", "Index", "Student")</li>
+                }
+
+                @if (Request.IsAuthenticated && User.IsInRole("MISTO"))
+                {
+                    <li>@Html.ActionLink("Students", "Index", "Student")</li>
+                }
+            </ul>
+            @Html.Partial("_LoginPartial")
         </div>
     </div>
+
     <div class="container body-content">
         @RenderBody()
         <hr />
