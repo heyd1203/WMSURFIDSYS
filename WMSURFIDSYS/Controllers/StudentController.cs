@@ -10,6 +10,7 @@ using System.Web.Mvc;
 using Dapper;
 using System.Data.Entity;
 using PagedList;
+using WMSURFIDSYS.ViewModel;
 
 namespace WMSURFIDSYS.Controllers
 {
@@ -71,13 +72,19 @@ namespace WMSURFIDSYS.Controllers
                     break;
             }
 
-           int pageSize = 10;
+           int pageSize = 25;
            int pageNumber = (page ?? 1);
            return View(students.ToPagedList(pageNumber, pageSize));
             //return View(students);
         }
 
-        //Display Student Details and Enrollment Date
+        public class SelectModel
+        {
+            public int id { get; set; }
+            public DateTime EnrollmentDate { get; set; }
+        }
+
+        //Display Student Details and Input for Enrollment Date and Message
         public ActionResult Select(int id)
         {
             var db = DAL.DbContext.Create();
@@ -109,7 +116,6 @@ namespace WMSURFIDSYS.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-           // var studentToUpdate = db.Students.Find(selectModel.id);
 
             var studentToUpdate = db.Students.Get(selectModel.id);
 
@@ -123,10 +129,92 @@ namespace WMSURFIDSYS.Controllers
             return RedirectToAction("Index");
         }
 
-        public class SelectModel
+        public class DeactivateModel
         {
             public int id { get; set; }
-            public DateTime EnrollmentDate { get; set; }
+            public int DeactivationReasonID { get; set; }
+            public virtual ICollection<DeactivationReason> DeactivationReasons { get; set; }
+            public string Remarks { get; set; }
+        }
+
+        public ActionResult Deactivate(int id)
+        {
+            var db = DAL.DbContext.Create();
+
+            if (id <= 0)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            var studentViewModel = new DeactivateTagData();
+
+            studentViewModel.Student = db.Students.Get(id);
+
+            if (studentViewModel.Student != null)
+            {
+                studentViewModel.Student.Course = db.Courses.Get(studentViewModel.Student.CourseID);
+                studentViewModel.Student.College = db.Colleges.Get(studentViewModel.Student.CollegeID);
+            }
+
+            if (studentViewModel == null)
+            {
+                return HttpNotFound();
+            }
+
+            var reasons = new List<SelectListItem>();
+            reasons.Add(new SelectListItem()
+            {
+                Text = "Select a reason",
+                Value = "0",
+                Selected = true
+            });
+
+            reasons.AddRange(from r in db.DeactivationReason.All()
+                             select new SelectListItem()
+                             {
+                                 Text = r.Reason,
+                                 Value = r.Id.ToString()
+                             });
+
+
+
+            ViewBag.DeactivationReasonId = reasons;
+
+            //return View();
+            return View(studentViewModel);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Deactivate(TagHistory tagHistory, int id, DeactivateModel deactivateModel)
+        {
+            var db = DAL.DbContext.Create();
+
+            var studentToDeactivate = db.Students.Get(id);
+
+            if (studentToDeactivate.Id <= 0)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+       
+            DateTime today = DateTime.Today;
+            
+            if (ModelState.IsValid)
+            {
+                tagHistory.StudentID = studentToDeactivate.Id;
+                tagHistory.DeactivationDate = today;
+                tagHistory.DeactivatedTag = studentToDeactivate.EPC;
+                tagHistory.DeactivationReasonID = deactivateModel.DeactivationReasonID;
+                //db.EPCDeactivate(deactivateModel.id, deactivateModel.EnrollmentDate);
+                db.TagHistorys.Insert(tagHistory);
+                studentToDeactivate.EPC = "";
+                //Update student.EPC to null
+                //db.EnrollmentDateUpdate(selectModel.id, selectModel.EnrollmentDate);
+                return RedirectToAction("UpdateEPC", new { id = id });
+            }
+
+            ViewBag.DeactivationReasonID = new SelectList(db.DeactivationReason.All(), "Id", "Reason", tagHistory.DeactivationReasonID);
+            return RedirectToAction("Details", new { id = id });
         }
 
         // GET: Student/Details/5
@@ -134,7 +222,7 @@ namespace WMSURFIDSYS.Controllers
         {
             var db = DAL.DbContext.Create();
 
-            if (id == null)
+            if (id <= 0)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
@@ -193,8 +281,8 @@ namespace WMSURFIDSYS.Controllers
                                  Value = c.Id.ToString()
                              });
 
-            ViewBag.CourseId = courses;
-            ViewBag.CollegeId = colleges;
+            ViewBag.CourseID = courses;
+            ViewBag.CollegeID = colleges;
 
             return View();
         }
@@ -230,14 +318,13 @@ namespace WMSURFIDSYS.Controllers
                             {
                                 return View(student);
                             }
-
                     }
                 }
             }
 
                 //ViewBag.Id = new SelectList(db.GetCourses().Distinct().ToList(), "Id", "CourseAbbv");
-                ViewBag.CourseId = new SelectList(db.Courses.All(), "Id", "CourseAbbv", student.Id);
-                ViewBag.CollegeId = new SelectList(db.Colleges.All(), "Id", "CollegeName", student.Id);
+                ViewBag.CourseID = new SelectList(db.Courses.All(), "Id", "CourseAbbv", student.CourseID);
+                ViewBag.CollegeID = new SelectList(db.Colleges.All(), "Id", "CollegeName", student.CollegeID);
 
             return View(student);
         }
@@ -290,8 +377,8 @@ namespace WMSURFIDSYS.Controllers
                 return HttpNotFound();
             }
 
-            ViewBag.CourseId = new SelectList(db.Courses.All(), "Id", "CourseAbbv", student.Id);
-            ViewBag.CollegeId = new SelectList(db.Colleges.All(), "Id", "CollegeName", student.Id);
+            ViewBag.CourseID = new SelectList(db.Courses.All(), "Id", "CourseAbbv", student.CourseID);
+            ViewBag.CollegeID = new SelectList(db.Colleges.All(), "Id", "CollegeName", student.CollegeID);
             return View(student);
         }
 

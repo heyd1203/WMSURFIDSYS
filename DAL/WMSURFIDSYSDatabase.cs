@@ -29,6 +29,8 @@ namespace DAL
         public Table<SemSchoolYear> SemSchoolYears { get; set; }
         public Table<Department> Departments { get; set; }
         public Table<TapLog> TapLogs { get; set; }
+        public Table<TagHistory> TagHistorys { get; set; }
+        public Table<DeactivationReason> DeactivationReason { get; set; }
 
         private System.Data.IDbConnection CreateConnection()
         {

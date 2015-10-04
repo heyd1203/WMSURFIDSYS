@@ -20,7 +20,6 @@
         <div class="masthead">
             <h3 class="text-muted">@Html.ActionLink("WMSURFIDSYS", "Index", "Home")</h3>
             <ul class="nav nav-justified">
-                @*<li>@Html.ActionLink("Home", "Index", "Home")</li>*@
 
                 @if (Request.IsAuthenticated && User.IsInRole("Admin"))
                 {
@@ -32,10 +31,10 @@
                             <li>@Html.ActionLink("School Year", "Index", "schoolyear")</li>
                             <li>@Html.ActionLink("Semester", "Index", "semester")</li>
                             <li class="divider"></li>
-                            @Html.ActionLink("SemSchoolYear", "Index", "SemSchoolYear")
-                        </ul>
-                    </li>
-                    <li>@Html.ActionLink("Colleges", "Index", "Colleges")</li>
+                            <li>@Html.ActionLink("SemSchoolYear", "Index", "SemSchoolYear")</li>
+                        </ul>    
+                    </li>          
+                    <li>@Html.ActionLink("Colleges", "Index", "College")</li>
                     <li>@Html.ActionLink("Courses", "Index", "Course")</li>
                     <li>@Html.ActionLink("Students", "Index", "Student")</li>
                 }

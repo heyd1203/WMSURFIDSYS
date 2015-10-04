@@ -146,7 +146,7 @@ namespace WMSURFIDSYS.Client
             FName.Text = student.FirstName.ToString();
             MName.Text = student.MidName.ToString();
             CAbbv.Text = students.Course.CourseAbbv.ToString();
-            College.Text = student.College.CollegeName.ToString();
+            Col.Text = student.College.CollegeName.ToString();
             Message.Text = student.Message.ToString();
 
            // CourseAbbv.Text = students.Course.CourseAbbv.ToString();
