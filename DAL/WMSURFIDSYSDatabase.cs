@@ -56,15 +56,7 @@ namespace DAL
         //    }
         //}
 
-        //public Student GetStudentByID(int id)
-        //{
-        //    Student student = this.Query<Student>("select * from students where id = @id", new { id = id })
-        //        .FirstOrDefault();
-
-
-        //    return student;
-        //}
-
+       
         //public void EnrollmentDateUpdate(int Id, DateTime enrollmentDate)
         //{
         //    var sqlQuery =
@@ -186,7 +178,8 @@ namespace DAL
 
         public SemSchoolYear SelectSemSchoolYear(DateTime today)
         {
-            var selectsemsy = this.Query<SemSchoolYear>("SELECT * FROM semschoolyears WHERE convert(datetime,EnrollmentDateStart)<= @today AND  @today<= convert(datetime,SemesterDateEnd)", new { today }).SingleOrDefault();
+            var selectsemsy = this.Query<SemSchoolYear>("SELECT * FROM semschoolyears WHERE convert(datetime,EnrollmentDateStart)<= @today "+
+                                "AND  @today<= convert(datetime,SemesterDateEnd)", new { today }).SingleOrDefault();
 
             //if (selectsemsy != null)
             //{
@@ -197,12 +190,25 @@ namespace DAL
             return selectsemsy;
         }
 
+        //public Student GetStudentByID(int id)
+        //{
+        //    Student student = this.Query<Student>("select * from students where id = @id", new { id = id })
+        //        .FirstOrDefault();
+        //    return student;
+        //}
+
+        public Student SearchStudentID(int id)
+        {
+            Student student = this.Query<Student>("select * from students where id = @id", new { id = id }).FirstOrDefault();
+            return student;
+        }
+
         public IList<TapLog> SelectStudent(int studentId, string firstName, string lastName)
         {
             var taplogs = this.Query<TapLog, Student, TapLog>("SELECT [dbo].[TapLogs].*, [dbo].[Students].* FROM [dbo].[TapLogs] INNER JOIN " +
                  "[dbo].[Students] ON [dbo].[TapLogs].[StudentID] = [dbo].[Students].[Id] " +
                  "WHERE ([dbo].[Students].[StudentID] = @StudentID) OR ([dbo].[Students].[LastName] like '%'+ @LastName +'%') OR " +
-                 "([dbo].Students.FirstName like '%'+ @FirstName +'%') ORDER BY DESC", (taplog, student) =>
+                 "([dbo].Students.FirstName like '%'+ @FirstName +'%') ORDER BY [dbo].[TapLogs].[DateTimeTap] DESC", (taplog, student) =>
                  {
                      taplog.Student = student;
                      return taplog;

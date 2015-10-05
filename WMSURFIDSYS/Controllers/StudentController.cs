@@ -18,13 +18,12 @@ namespace WMSURFIDSYS.Controllers
     {
         //[Authorize(Roles = "Admin")]
         // GET: Student
-        public ActionResult Index(string sortOrder, string currentFilter, string searchString, int? page)
+        public ActionResult Index(string sortOrder, string currentFilter, string searchString, int? page, string option)
         {
             var db = DAL.DbContext.Create();
 
-            ViewBag.CurrentSort = sortOrder;
-            ViewBag.NameSortParm = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
-            ViewBag.IDSortParm = sortOrder == "StudentID" ? "id_no" : "StudentID";
+            int studentId;
+            int.TryParse(searchString, out studentId);
 
             if (searchString != null)
             {
@@ -36,12 +35,9 @@ namespace WMSURFIDSYS.Controllers
             }
 
             ViewBag.CurrentFilter = searchString;
-
-            //var students = from s in db.Students select s;
                            
-
-            //IEnumerable<DAL.Student> students = db.GetStudents().ToList();
             IEnumerable<DAL.Student> students = db.Students.All().ToList();
+            //students = students.OrderByDescending(s => s.LastName);
 
             foreach(var student in students)
             {
@@ -49,28 +45,24 @@ namespace WMSURFIDSYS.Controllers
             }
 
 
-            if (!String.IsNullOrEmpty(searchString))
+            //if a user choose the radio button option as Subject  
+            if (option == "StudentID") 
             {
-                students = students.Where(s =>
-                s.LastName.ToUpper().Contains(searchString.ToUpper()) ||
-                s.FirstName.ToUpper().Contains(searchString.ToUpper()));
-            }
-
-            switch (sortOrder)
-            {
-                case "id_no":
-                    students = students.OrderByDescending(s => s.StudentID);
-                    break;
-                case "name_desc":
-                    students = students.OrderByDescending(s => s.LastName);
-                    break;
-                //case "course_desc":
-                //    students = students.OrderByDescending(s => s.CourseID);
-                //    break;
-                default:
-                    students = students.OrderBy(s => s.LastName);
-                    break;
-            }
+                if (!String.IsNullOrEmpty(searchString))
+                {
+                   return View(db.Students.Get(studentId));    
+                }
+            } 
+            if (option == "Name") 
+            {  
+                 if (!String.IsNullOrEmpty(searchString))
+                {
+                    students = students.Where(s =>
+                    s.LastName.ToUpper().Contains(searchString.ToUpper()) ||
+                    s.FirstName.ToUpper().Contains(searchString.ToUpper()));
+                 }
+            } 
+            
 
            int pageSize = 25;
            int pageNumber = (page ?? 1);

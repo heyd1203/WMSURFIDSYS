@@ -15,18 +15,22 @@
 </p>
 @using (Html.BeginForm("Index", "Student", FormMethod.Get))
 {
+    //the following are search options
     <p>
-        Find by name: @Html.TextBox("SearchString", ViewBag.CurrentFilter as string)
+        Search Option: @Html.RadioButton("option", "StudentID") <text>StudentID</text>
+        @Html.RadioButton("option", "Name") <text> Name </text>
+        @Html.TextBox("SearchString", ViewBag.CurrentFilter as string)
         <input type="submit" value="Search" />
     </p>
 }
+
 <table class="table">
     <tr>
         <th>
-            @Html.ActionLink("Student Number", "Index", new { sortOrder = ViewBag.NameSortParm })
+            Student Number
         </th>
         <th>
-            @Html.ActionLink("Last Name", "Index", new { sortOrder = ViewBag.NameSortParm })
+            Last Name
         </th>
         <th>
             First Name
@@ -35,7 +39,7 @@
             MI
         </th>
         <th>
-            @Html.ActionLink("Course", "Index", new { sortOrder = ViewBag.DateSortParm })
+           Course
         </th>
         <th>
             Enrollment Date
