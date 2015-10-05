@@ -21,9 +21,7 @@ namespace WMSURFIDSYS.Controllers
 
             if (!String.IsNullOrEmpty(searchString))
             {
-
                 taplogs = db.SelectStudent(studentId, searchString, searchString);
-
             }
 
             foreach(var taplog in taplogs)

@@ -60,19 +60,24 @@
         <dd>
             @Html.DisplayFor(model => model.Student.Course.CourseAbbv)
         </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Student.EPC)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Student.EPC)
-        </dd>
-
     </dl>
 </div>
 @if (Model.Student.EPC.IsEmpty() == false)
 {
     <h4>Deactivation Tag Details</h4>
+    <div>
+        <hr />
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.Student.EPC)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Student.EPC)
+            </dd>
+        </dl>
+    </div>
+    
     using (Html.BeginForm("Deactivate", "Student", null, FormMethod.Post, new { enctype = "multipart/form-data" }))
     {
         @Html.AntiForgeryToken()

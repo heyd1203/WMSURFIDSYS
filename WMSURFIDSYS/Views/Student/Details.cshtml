@@ -1,4 +1,4 @@
-﻿@model DAL.Student
+﻿@model WMSURFIDSYS.ViewModel.StudentDetailsData
 
 @{
     ViewBag.Title = "Details";
@@ -15,76 +15,125 @@
                 Photo
             </dt>
             <dd>
-                <img src="~/File?id=@Model.Id" alt="photo" style="width: 150px; height: 150px;" />
+                <img src="~/File?id=@Model.Student.Id" alt="photo" style="width: 150px; height: 150px;" />
             </dd>
  
         <dt>
-            @Html.DisplayNameFor(model => model.StudentID)
+            @Html.DisplayNameFor(model => model.Student.StudentID)        
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.StudentID)
+            @Html.DisplayFor(model => model.Student.StudentID)        
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.LastName)
+            @Html.DisplayNameFor(model => model.Student.LastName)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.LastName)
+            @Html.DisplayFor(model => model.Student.LastName)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.FirstName)
+            @Html.DisplayNameFor(model => model.Student.FirstName)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.FirstName)
+            @Html.DisplayFor(model => model.Student.FirstName)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.MidName)
+            @Html.DisplayNameFor(model => model.Student.MidName)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.MidName)
+            @Html.DisplayFor(model => model.Student.MidName)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.CollegeID)
+            @Html.DisplayNameFor(model => model.Student.CollegeID)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.College.CollegeName)
+            @Html.DisplayFor(model => model.Student.College.CollegeName)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.CourseID)
+            @Html.DisplayNameFor(model => model.Student.CourseID)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Course.CourseAbbv)
+            @Html.DisplayFor(model => model.Student.Course.CourseAbbv)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.EPC)
+            @Html.DisplayNameFor(model => model.Student.EPC)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.EPC)
+            @Html.DisplayFor(model => model.Student.EPC)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.EnrollmentDate)
+            @Html.DisplayNameFor(model => model.Student.EnrollmentDate)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.EnrollmentDate)
+            @Html.DisplayFor(model => model.Student.EnrollmentDate)
         </dd>
 
+        <dt>
+            @Html.DisplayNameFor(model => model.Student.Message)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Student.Message)
+        </dd>
     </dl>
 </div>
+
+
+<h4>Deactivated Tag Historys</h4>
+<table class="table">
+    <tr>
+        <th>
+            Deactivated Tag
+        </th>
+        <th>
+            Deactivation Date
+        </th>
+        <th>
+            Reason
+        </th>
+        <th>
+            Remarks
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model.TagHistory)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.DeactivatedTag)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DeactivationDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DeactivationReason.Reason)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Remarks)
+            </td>
+         </tr>
+    }
+
+</table>
+<br />
+
+
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Student.Id }) |
     @Html.ActionLink("Back to List", "Index")
 </p>

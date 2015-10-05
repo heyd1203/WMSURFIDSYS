@@ -37,47 +37,61 @@ namespace DAL
             return new SqlConnection(ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString);
         }
 
-        public IEnumerable<Student> GetStudents()
-        {
-            try
-            {
-                using (var cnn = CreateConnection())
-                {
-                    cnn.Open();
-                    var students = cnn.Query<Student>("select * from students");
+        //public IEnumerable<Student> GetStudents()
+        //{
+        //    try
+        //    {
+        //        using (var cnn = CreateConnection())
+        //        {
+        //            cnn.Open();
+        //            var students = cnn.Query<Student>("select * from students");
 
-                    return students;
-                }
-            }
+        //            return students;
+        //        }
+        //    }
 
-            catch (Exception x)
-            {
-                throw x;
-            }
-        }
+        //    catch (Exception x)
+        //    {
+        //        throw x;
+        //    }
+        //}
 
-        public Student GetStudentByID(int id)
-        {
-            Student student = this.Query<Student>("select * from students where id = @id", new { id = id })
-                .FirstOrDefault();
+        //public Student GetStudentByID(int id)
+        //{
+        //    Student student = this.Query<Student>("select * from students where id = @id", new { id = id })
+        //        .FirstOrDefault();
 
 
-            return student;
-        }
+        //    return student;
+        //}
 
-        public void EnrollmentDateUpdate(int Id, DateTime enrollmentDate)
-        {
-            var sqlQuery =
-                "UPDATE Students " +
-                "SET EnrollmentDate     = @EnrollmentDate " +
-                "WHERE Id = @Id";
+        //public void EnrollmentDateUpdate(int Id, DateTime enrollmentDate)
+        //{
+        //    var sqlQuery =
+        //        "UPDATE Students " +
+        //        "SET EnrollmentDate     = @EnrollmentDate " +
+        //        "WHERE Id = @Id";
 
-            using (var cnn = CreateConnection())
-            {
-                cnn.Open();
-                cnn.Execute(sqlQuery, new { EnrollmentDate = enrollmentDate, Id = Id });
-            }
-        }
+        //    using (var cnn = CreateConnection())
+        //    {
+        //        cnn.Open();
+        //        cnn.Execute(sqlQuery, new { EnrollmentDate = enrollmentDate, Id = Id });
+        //    }
+        //}
+
+        //public void EPCUpdate(int Id, string epc)
+        //{
+        //    var sqlQuery =
+        //        "UPDATE Students " +
+        //        "SET EPC     = @EPC " +
+        //        "WHERE Id = @Id";
+
+        //    using (var cnn = CreateConnection())
+        //    {
+        //        cnn.Open();
+        //        cnn.Execute(sqlQuery, new { EPC = epc, Id = Id });
+        //    }
+        //}
        
         public IEnumerable<Course> GetCourses()
         {
@@ -163,12 +177,13 @@ namespace DAL
             //return result != null;
         }
 
-        public bool DeleteStudent(Student student)
-        {
-            var result = this.Query(Resources.Student_CheckForDependencies, new { studentId = student.StudentID }).FirstOrDefault();
+        //public bool DeleteStudent(Student student)
+        //{
+        //    var result = this.Query(Resources.Student_CheckForDependencies, new { studentId = student.StudentID }).FirstOrDefault();
 
-            return result != null;
-        }
+        //    return result != null;
+        //}
+
         public SemSchoolYear SelectSemSchoolYear(DateTime today)
         {
             var selectsemsy = this.Query<SemSchoolYear>("SELECT * FROM semschoolyears WHERE convert(datetime,EnrollmentDateStart)<= @today AND  @today<= convert(datetime,SemesterDateEnd)", new { today }).SingleOrDefault();
@@ -184,11 +199,10 @@ namespace DAL
 
         public IList<TapLog> SelectStudent(int studentId, string firstName, string lastName)
         {
-
-            var taplogs = this.Query<TapLog, Student, TapLog>("SELECT [dbo].[TapLogs].*, [dbo].[Students].* FROM [dbo].[TapLogs] INNER JOIN" +
-                 "[dbo].[Students] ON [dbo].[TapLogs].[StudentID] = [dbo].[Students].[Id]" +
-                 "WHERE ([dbo].[Students].[StudentID] = @StudentID) OR ([dbo].[Students].[LastName] like '%'+ @LastName +'%') OR" +
-                 " ([dbo].Students.FirstName like '%'+ @FirstName +'%') ORDER BY DESC", (taplog, student) =>
+            var taplogs = this.Query<TapLog, Student, TapLog>("SELECT [dbo].[TapLogs].*, [dbo].[Students].* FROM [dbo].[TapLogs] INNER JOIN " +
+                 "[dbo].[Students] ON [dbo].[TapLogs].[StudentID] = [dbo].[Students].[Id] " +
+                 "WHERE ([dbo].[Students].[StudentID] = @StudentID) OR ([dbo].[Students].[LastName] like '%'+ @LastName +'%') OR " +
+                 "([dbo].Students.FirstName like '%'+ @FirstName +'%') ORDER BY DESC", (taplog, student) =>
                  {
                      taplog.Student = student;
                      return taplog;
@@ -196,7 +210,18 @@ namespace DAL
             return taplogs.ToList();
 
         }
-
+        
+        public List<TagHistory> SelectStudentTagHistory(int studentId)
+        {
+            var tagHistorys = this.Query<TagHistory, Student, TagHistory>("SELECT [dbo].[TagHistorys].*, [dbo].[Students].[Id] " +
+                 "FROM [dbo].[TagHistorys] INNER JOIN [dbo].[Students] ON [dbo].[TagHistorys].[StudentID] = [dbo].[Students].[Id] " +
+                 "WHERE ([dbo].[Students].[Id] = @StudentID) ORDER BY [dbo].[TagHistorys].[DeactivationDate] DESC", (tagHistory, student) =>
+                 {
+                     tagHistory.Student = student;
+                     return tagHistory;
+                 }, new { studentId});
+            return tagHistorys.ToList();
+        }
     }
 
 }

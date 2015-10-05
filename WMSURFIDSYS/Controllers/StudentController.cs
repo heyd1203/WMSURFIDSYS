@@ -82,6 +82,7 @@ namespace WMSURFIDSYS.Controllers
         {
             public int id { get; set; }
             public DateTime EnrollmentDate { get; set; }
+            public string Message { get; set; }
         }
 
         //Display Student Details and Input for Enrollment Date and Message
@@ -97,6 +98,12 @@ namespace WMSURFIDSYS.Controllers
             //Select Code is found in WMSURFIDSYSDatabase.cs
             //var student = db.GetStudentByID(id);
             var student = db.Students.Get(id);
+
+            if (student != null)
+            {
+                student.Course = db.Courses.Get(student.CourseID);
+                student.College = db.Colleges.Get(student.CollegeID);
+            }
 
             if (student == null)
             {
@@ -122,7 +129,9 @@ namespace WMSURFIDSYS.Controllers
             if (ModelState.IsValid)
             {
                 studentToUpdate.EnrollmentDate = selectModel.EnrollmentDate;
-                db.EnrollmentDateUpdate(selectModel.id, selectModel.EnrollmentDate);
+                studentToUpdate.Message = selectModel.Message;
+                //db.EnrollmentDateUpdate(selectModel.id, selectModel.EnrollmentDate);
+                db.Students.Update(studentToUpdate.Id, studentToUpdate);
                 return RedirectToAction("Index");
             }
 
@@ -205,11 +214,13 @@ namespace WMSURFIDSYS.Controllers
                 tagHistory.DeactivationDate = today;
                 tagHistory.DeactivatedTag = studentToDeactivate.EPC;
                 tagHistory.DeactivationReasonID = deactivateModel.DeactivationReasonID;
-                //db.EPCDeactivate(deactivateModel.id, deactivateModel.EnrollmentDate);
                 db.TagHistorys.Insert(tagHistory);
-                studentToDeactivate.EPC = "";
-                //Update student.EPC to null
-                //db.EnrollmentDateUpdate(selectModel.id, selectModel.EnrollmentDate);
+
+                //set EPC to null
+                studentToDeactivate.EPC = " ";
+                //Update db.Students EPC to null
+                db.Students.Update(studentToDeactivate.Id, studentToDeactivate);
+
                 return RedirectToAction("UpdateEPC", new { id = id });
             }
 
@@ -217,8 +228,13 @@ namespace WMSURFIDSYS.Controllers
             return RedirectToAction("Details", new { id = id });
         }
 
-        // GET: Student/Details/5
-        public ActionResult Details(int id)
+        public class UpdateEPCModel
+        {
+            public int Id { get; set; }
+            public string EPC { get; set; }
+        }
+
+        public ActionResult UpdateEPC(int id)
         {
             var db = DAL.DbContext.Create();
 
@@ -226,8 +242,6 @@ namespace WMSURFIDSYS.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-
-            //Student student = db.Students.Include(s => s.Files).SingleOrDefault(s => s.StudentID == id);
 
             var student = db.Students.Get(id);
 
@@ -241,7 +255,102 @@ namespace WMSURFIDSYS.Controllers
             {
                 return HttpNotFound();
             }
+
             return View(student);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult UpdateEPC(UpdateEPCModel updateEPCModel)
+        {
+            var db = DAL.DbContext.Create();
+
+            if (updateEPCModel.Id <= 0)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            var studentToUpdate = db.Students.Get(updateEPCModel.Id);
+
+            if (studentToUpdate != null)
+            {
+                studentToUpdate.Course = db.Courses.Get(studentToUpdate.CourseID);
+                studentToUpdate.College = db.Colleges.Get(studentToUpdate.CollegeID);
+            }
+
+            if (ModelState.IsValid)
+            {
+                if (EPCValidate(studentToUpdate))
+                {
+                    studentToUpdate.EPC = updateEPCModel.EPC;
+                    db.Students.Update(studentToUpdate.Id, studentToUpdate);
+                    return RedirectToAction("Index");
+                }
+                
+            }
+
+            return View (studentToUpdate);
+        }
+
+        private bool EPCValidate(Student student)
+        {
+            var db = DAL.DbContext.Create();
+
+            var existEPC = db.Students.All().FirstOrDefault(s => s.EPC == student.EPC);
+
+            var isValid = true;
+
+            //validate EPC
+            if (existEPC != null)
+            {
+                isValid = false;
+                ModelState.AddModelError("", "Unable to save changes. EPC already exist.");
+            }
+
+            return isValid;
+        }
+
+        // GET: Student/Details/5
+        public ActionResult Details(int id)
+        {
+            var db = DAL.DbContext.Create();
+
+            if (id <= 0)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            
+            var studentViewModel = new StudentDetailsData();
+
+            studentViewModel.Student = db.Students.Get(id);
+
+            if (studentViewModel.Student != null)
+            {
+                studentViewModel.Student.Course = db.Courses.Get(studentViewModel.Student.CourseID);
+                studentViewModel.Student.College = db.Colleges.Get(studentViewModel.Student.CollegeID);
+
+                var tagHistorys = db.SelectStudentTagHistory(studentViewModel.Student.Id);
+                
+                studentViewModel.TagHistory = tagHistorys;
+                
+                foreach (var tagHistory in tagHistorys)
+                {
+                    tagHistory.Student = db.Students.Get(tagHistory.StudentID);
+                    tagHistory.DeactivationReason = db.DeactivationReason.Get(tagHistory.DeactivationReasonID);
+                }
+            }
+
+            //IEnumerable<DAL.TagHistory> tagHistorys = db.TagHistorys.All().ToList();
+            //tagHistorys = tagHistorys.OrderByDescending(t => t.DeactivationDate);
+            
+
+            if (studentViewModel == null)
+            {
+                return HttpNotFound();
+            }
+
+            return View(studentViewModel);
         }
 
         // GET: Student/Create
