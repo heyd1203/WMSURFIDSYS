@@ -1,23 +1,43 @@
 ﻿@model IEnumerable<DAL.TapLog>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "SearchByDate";
 }
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $(".DatePicker").datepicker({
+            dateFormat: 'dd M yy',
+            changeMonth: true,
+            changeYear: true,
+        });
+    });
+</script>
 
 <h2>Tag Tap Logs</h2>
 
 <p>
-    @Html.ActionLink("Search By Date", "SearchByDate")
+    @Html.ActionLink("Search By Student ID", "Index")
 </p>
 
-@using (Html.BeginForm("Index", "TapLog", FormMethod.Get))
+@{
+    var fromDate = (DateTime)ViewBag.fromDate;
+    var toDate = (DateTime)ViewBag.toDate;
+}
+
+@using (Html.BeginForm("SearchByDate", "TapLog", FormMethod.Get))
 {
     <div class="form-horizontal">
-        <h4>Search By Student ID</h4>
+        <h4>Search By Date</h4>
         <hr />
         <div class="form-group">
-            @Html.Label("StudentID", null, new { @class = "control-label col-lg-1" })
-            <div class="col-lg-11"> @Html.TextBox("SearchString")</div>
+            @Html.Label(" From Date", null, new { @class = "control-label col-lg-1" })
+            <div class="col-lg-11"> @Html.TextBox("fromDate", string.Format("{0:dd MMM yyy}", fromDate), new { @class = "DatePicker" })</div>
+        </div>
+
+        <div class="form-group">
+            @Html.Label(" To Date", null, new { @class = "control-label col-lg-1" })
+            <div class="col-lg-11">@Html.TextBox("toDate", string.Format("{0:dd MMM yyy}", fromDate), new { @class = "DatePicker" })</div>
         </div>
 
         <div class="form-group">
@@ -28,6 +48,8 @@
     </div>
 }
 
+<p> </p>
+<br />
 <table class="table">
     <tr>
         <th>

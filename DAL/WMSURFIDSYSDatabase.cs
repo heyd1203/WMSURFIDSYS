@@ -216,6 +216,20 @@ namespace DAL
             return taplogs.ToList();
 
         }
+
+        public IList<TapLog> SelectStudentsDateTap(DateTime fromDate, DateTime toDate)
+        {
+            var taplogs = this.Query<TapLog, Student, TapLog>("SELECT [dbo].[TapLogs].*, [dbo].[Students].* FROM [dbo].[TapLogs] INNER JOIN " +
+                 "[dbo].[Students] ON [dbo].[TapLogs].[StudentID] = [dbo].[Students].[Id] " +
+                 "WHERE ([dbo].[TapLogs].[DateTimeTap] >= @fromDate) AND ([dbo].[TapLogs].[DateTimeTap] < @toDate)  " +
+                 "ORDER BY [dbo].[TapLogs].[DateTimeTap] DESC", (taplog, student) =>
+                 {
+                     taplog.Student = student;
+                     return taplog;
+                 }, new { fromDate, toDate });
+            return taplogs.ToList();
+
+        }
         
         public List<TagHistory> SelectStudentTagHistory(int studentId)
         {

@@ -3,6 +3,8 @@ Using Date Template
 @Html.TextBoxFor(model => Model,
    "{0:dd-MM-yyyy}",
    new { @class = "form-control jqueryui-marker-datepicker" })
+@Html.TextBox("{0:dd-MM-yyyy}",
+   new { @class = "form-control jqueryui-marker-datepicker" })
 @Html.EditorFor(model => Model,
    "{0:dd-MM-yyyy}",
    new { @class = "form-control jqueryui-marker-datepicker" })

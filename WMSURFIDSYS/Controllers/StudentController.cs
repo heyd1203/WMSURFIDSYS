@@ -44,7 +44,6 @@ namespace WMSURFIDSYS.Controllers
                 student.Course =  db.Courses.Get(student.CourseID);
             }
 
-
             //if a user choose the radio button option as Subject  
             if (option == "StudentID") 
             {

@@ -12,7 +12,6 @@ namespace WMSURFIDSYS.Controllers
         {
             var db = DAL.DbContext.Create();
 
-
             int studentId;
             int.TryParse(searchString, out studentId);
 

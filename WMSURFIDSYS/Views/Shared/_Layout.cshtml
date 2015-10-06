@@ -12,7 +12,15 @@
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/jqueryval")
     @Scripts.Render("~/bundles/jqueryui")
-
+    <script type="text/javascript">
+    $(document).ready(function () {
+        $(".DatePicker").datepicker({
+            dateFormat: 'dd M yy',
+            changeMonth: true,
+            changeYear: true,
+        });
+    });
+    </script>
 
 </head>
 <body>
@@ -25,6 +33,18 @@
                 {
                     <li>@Html.ActionLink("RolesAdmin", "Index", "RolesAdmin")</li>
                     <li>@Html.ActionLink("UsersAdmin", "Index", "UsersAdmin")</li>
+                    <li>@Html.ActionLink("Students", "Index", "Student")</li>
+                    <li>@Html.ActionLink("Colleges", "Index", "College")</li>
+                    <li>@Html.ActionLink("Courses", "Index", "Course")</li>           
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Search <span class="caret"></span></a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li>@Html.ActionLink("Tag Tap Logs", "Index", "TapLog")</li>
+                            <li>@Html.ActionLink("Deactivated Tags", "Index", "DeactivatedTags")</li>
+                            <li>@Html.ActionLink("Students not Enrolled", "Index", "unEnrolledStudents")</li>
+                            <li>@Html.ActionLink("Student with Message", "Index", "Messages")</li>
+                        </ul>
+                    </li>
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Settings <span class="caret"></span></a>
                         <ul class="dropdown-menu" role="menu">
@@ -32,11 +52,8 @@
                             <li>@Html.ActionLink("Semester", "Index", "semester")</li>
                             <li class="divider"></li>
                             <li>@Html.ActionLink("SemSchoolYear", "Index", "SemSchoolYear")</li>
-                        </ul>    
-                    </li>          
-                    <li>@Html.ActionLink("Colleges", "Index", "College")</li>
-                    <li>@Html.ActionLink("Courses", "Index", "Course")</li>
-                    <li>@Html.ActionLink("Students", "Index", "Student")</li>
+                        </ul>
+                    </li>
                 }
 
                 @if (Request.IsAuthenticated && User.IsInRole("UPress"))
