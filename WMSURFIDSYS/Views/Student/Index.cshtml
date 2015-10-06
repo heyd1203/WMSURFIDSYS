@@ -8,7 +8,7 @@
     ViewBag.Title = "Index";
 }
 
-<h2>Index</h2>
+<h2>Students</h2>
 
 <p>
     @Html.ActionLink("Create New", "Create")
@@ -16,8 +16,10 @@
 @using (Html.BeginForm("Index", "Student", FormMethod.Get))
 {
     //the following are search options
+    <h4>Custom Search for Student</h4>
+    <hr />
     <p>
-        Search Option: @Html.RadioButton("option", "StudentID") <text>StudentID</text>
+        Search Option: @Html.RadioButton("option", "StudentID", true) <text>StudentID</text>
         @Html.RadioButton("option", "Name") <text> Name </text>
         @Html.TextBox("SearchString", ViewBag.CurrentFilter as string)
         <input type="submit" value="Search" />

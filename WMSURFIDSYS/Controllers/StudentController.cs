@@ -36,9 +36,9 @@ namespace WMSURFIDSYS.Controllers
 
             ViewBag.CurrentFilter = searchString;
                            
-            IEnumerable<DAL.Student> students = db.Students.All().ToList();
+            //IEnumerable<DAL.Student> students = db.Students.All().ToList();
             //students = students.OrderByDescending(s => s.LastName);
-
+            var students = db.Students.All();
             foreach(var student in students)
             {
                 student.Course =  db.Courses.Get(student.CourseID);
@@ -49,7 +49,7 @@ namespace WMSURFIDSYS.Controllers
             {
                 if (!String.IsNullOrEmpty(searchString))
                 {
-                   return View(db.Students.Get(studentId));    
+                   students = students.Where(s => s.StudentID.Equals(studentId));
                 }
             } 
             if (option == "Name") 
@@ -62,11 +62,50 @@ namespace WMSURFIDSYS.Controllers
                  }
             } 
             
-
            int pageSize = 25;
            int pageNumber = (page ?? 1);
            return View(students.ToPagedList(pageNumber, pageSize));
             //return View(students);
+        }
+
+        public ActionResult Search(string q, string S)
+        {
+             var db = DAL.DbContext.Create();
+
+             var students = db.Students.All();
+            int id = Convert.ToInt32(Request["SearchType"]);
+            var searchParameter = "Searching";
+
+            foreach (var student in students)
+            {
+                student.Course = db.Courses.Get(student.CourseID);
+            }
+
+            if (!string.IsNullOrWhiteSpace(q))
+            {
+                switch (id)
+                {
+                    case 0:
+                        int iQ = int.Parse(q);
+                        students = students.Where(s => s.StudentID.Equals(iQ));
+                        searchParameter += " Id for ' " + q + " '";
+                        break;
+                    case 1:
+                        students = students.Where(s => s.FirstName.Contains(q));
+                        searchParameter += " First Name for ' " + q + " '";
+                        break;
+                    case 2:
+                        students = students.Where(s => s.LastName.Contains(q));
+                        searchParameter += " Last Name for '" + q + "'";
+                        break;
+                }
+            }
+            else
+            {
+                searchParameter += "ALL";
+            }
+            ViewBag.SearchParameter = searchParameter;
+            return View(students);
         }
 
         public class SelectModel
