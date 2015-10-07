@@ -190,19 +190,22 @@ namespace DAL
             return selectsemsy;
         }
 
-        //public Student GetStudentByID(int id)
-        //{
-        //    Student student = this.Query<Student>("select * from students where id = @id", new { id = id })
-        //        .FirstOrDefault();
-        //    return student;
-        //}
-
-        public Student SearchStudentID(int id)
+        public IEnumerable<Student> SearchNoEPC()
         {
-            Student student = this.Query<Student>("select * from students where id = @id", new { id = id }).FirstOrDefault();
-            return student;
+            try
+            {
+                using (var cnn = CreateConnection())
+                {
+                    cnn.Open();
+                    var students = cnn.Query<Student>("SELECT [dbo].[Students].* FROM [dbo].[Students] WHERE ([dbo].[Students].[EPC] = '')");
+                    return students;
+                }
+            }
+            catch (Exception x)
+            {
+                throw x;
+            }
         }
-
         public IList<TapLog> SelectStudent(int studentId, string firstName, string lastName)
         {
             var taplogs = this.Query<TapLog, Student, TapLog>("SELECT [dbo].[TapLogs].*, [dbo].[Students].* FROM [dbo].[TapLogs] INNER JOIN " +

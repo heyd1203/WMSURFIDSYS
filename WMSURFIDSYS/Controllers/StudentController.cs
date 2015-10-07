@@ -68,45 +68,43 @@ namespace WMSURFIDSYS.Controllers
             //return View(students);
         }
 
-        public ActionResult Search(string q, string S)
+        public ActionResult Filter(int? page, string option)
         {
              var db = DAL.DbContext.Create();
 
-             var students = db.Students.All();
-            int id = Convert.ToInt32(Request["SearchType"]);
-            var searchParameter = "Searching";
+             IEnumerable<DAL.Student> students = db.Students.All().ToList();
 
             foreach (var student in students)
             {
                 student.Course = db.Courses.Get(student.CourseID);
             }
 
-            if (!string.IsNullOrWhiteSpace(q))
+            //if a user choose the radio button option as Subject  
+            if (option == "NoEPC")
             {
-                switch (id)
-                {
-                    case 0:
-                        int iQ = int.Parse(q);
-                        students = students.Where(s => s.StudentID.Equals(iQ));
-                        searchParameter += " Id for ' " + q + " '";
-                        break;
-                    case 1:
-                        students = students.Where(s => s.FirstName.Contains(q));
-                        searchParameter += " First Name for ' " + q + " '";
-                        break;
-                    case 2:
-                        students = students.Where(s => s.LastName.Contains(q));
-                        searchParameter += " Last Name for '" + q + "'";
-                        break;
-                }
+                //students = db.Students.All().Where(s => s.EPC is null || s => s.EPC);
+                students = db.SearchNoEPC();
             }
-            else
+            if (option == "WithMessage")
             {
-                searchParameter += "ALL";
+                students = db.Students.All().Where(s => s.Message != null);
             }
-            ViewBag.SearchParameter = searchParameter;
-            return View(students);
+            if (option == "NotEnrolled")
+            {
+                DateTime today = DateTime.Today;
+                var validenrollmentdate = db.SelectSemSchoolYear(today);
+
+                var currentEnrollmentStartDate = validenrollmentdate.EnrollmentDateStart;
+                var currentSemesterEndSate = validenrollmentdate.SemesterDateEnd;
+
+                //students = db.Students.All().Where(s => s.EnrollmentDate >= currentEnrollmentStartDate && s => s.EnrollmentDate < currentSemesterEndSate);
+            }
+
+            int pageSize = 25;
+            int pageNumber = (page ?? 1);
+            return View(students.ToPagedList(pageNumber, pageSize));
         }
+
 
         public class SelectModel
         {

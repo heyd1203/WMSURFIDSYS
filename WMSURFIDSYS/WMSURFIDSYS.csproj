@@ -406,7 +406,7 @@
     <Content Include="Views\Student\UpdateEPC.cshtml" />
     <Content Include="Views\Student\Deactivate.cshtml" />
     <Content Include="Views\TapLog\SearchByDate.cshtml" />
-    <Content Include="Views\Student\Search.cshtml" />
+    <Content Include="Views\Student\Filter.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
