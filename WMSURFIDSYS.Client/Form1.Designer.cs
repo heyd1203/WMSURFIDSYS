@@ -41,8 +41,8 @@
             this.ShowSem = new System.Windows.Forms.Label();
             this.Error = new System.Windows.Forms.Label();
             this.label = new System.Windows.Forms.Label();
-            this.Col = new System.Windows.Forms.Label();
             this.Message = new System.Windows.Forms.Label();
+            this.labelCollege = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.image)).BeginInit();
             this.SuspendLayout();
             // 
@@ -116,6 +116,7 @@
             // image
             // 
             this.image.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.image.Image = global::WMSURFIDSYS.Client.Properties.Resources.photo_not_available;
             this.image.InitialImage = ((System.Drawing.Image)(resources.GetObject("image.InitialImage")));
             this.image.Location = new System.Drawing.Point(27, 90);
             this.image.Margin = new System.Windows.Forms.Padding(4);
@@ -199,18 +200,6 @@
             this.label.Text = "Message";
             this.label.Click += new System.EventHandler(this.label1_Click);
             // 
-            // Col
-            // 
-            this.Col.AutoSize = true;
-            this.Col.BackColor = System.Drawing.Color.Transparent;
-            this.Col.Font = new System.Drawing.Font("Georgia", 26.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Col.ForeColor = System.Drawing.Color.Gainsboro;
-            this.Col.Location = new System.Drawing.Point(299, 242);
-            this.Col.Name = "Col";
-            this.Col.Size = new System.Drawing.Size(149, 41);
-            this.Col.TabIndex = 32;
-            this.Col.Text = "College";
-            // 
             // Message
             // 
             this.Message.AutoSize = true;
@@ -222,6 +211,20 @@
             this.Message.TabIndex = 33;
             this.Message.Text = "                                                                          \r\n\r\n\r\n\r" +
     "\n\r\n";
+            this.Message.Click += new System.EventHandler(this.Message_Click);
+            // 
+            // labelCollege
+            // 
+            this.labelCollege.AutoSize = true;
+            this.labelCollege.BackColor = System.Drawing.Color.Transparent;
+            this.labelCollege.Font = new System.Drawing.Font("Georgia", 26.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelCollege.ForeColor = System.Drawing.Color.Gainsboro;
+            this.labelCollege.Location = new System.Drawing.Point(300, 239);
+            this.labelCollege.Name = "labelCollege";
+            this.labelCollege.Size = new System.Drawing.Size(149, 41);
+            this.labelCollege.TabIndex = 36;
+            this.labelCollege.Text = "College";
+            this.labelCollege.Click += new System.EventHandler(this.labelCollege_Click);
             // 
             // WMSURFIDSYS
             // 
@@ -231,8 +234,8 @@
             this.BackgroundImage = global::WMSURFIDSYS.Client.Properties.Resources.WinForm_BG_v2;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.ClientSize = new System.Drawing.Size(739, 540);
+            this.Controls.Add(this.labelCollege);
             this.Controls.Add(this.Message);
-            this.Controls.Add(this.Col);
             this.Controls.Add(this.label);
             this.Controls.Add(this.Error);
             this.Controls.Add(this.ShowSY);
@@ -268,8 +271,8 @@
         private System.Windows.Forms.Label ShowSem;
         private System.Windows.Forms.Label Error;
         private System.Windows.Forms.Label label;
-        private System.Windows.Forms.Label Col;
         private System.Windows.Forms.Label Message;
+        private System.Windows.Forms.Label labelCollege;
     }
 }
 

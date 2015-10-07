@@ -33,7 +33,7 @@ namespace WMSURFIDSYS.Client
 
             //display current date and time
             ShowDate.Text = DateTime.Now.ToString("MM dd yyyy");
-            ShowTime.Text = DateTime.Now.ToString("HH:mm");
+            ShowTime.Text = DateTime.Now.ToString("hh:mm tt");
 
             DateTime today = DateTime.Today;
             var validenrollmentdate = db.SelectSemSchoolYear(today);
@@ -80,8 +80,6 @@ namespace WMSURFIDSYS.Client
 
                     if (existEPC != null)
                     {
-                        
-
                         if (ValidateEnrollmentDate(existEPC, validenrollmentdate))
                         {
                             //display data
@@ -96,6 +94,7 @@ namespace WMSURFIDSYS.Client
 
                         else 
                         {
+                            DisplayStudentInfo(existEPC);
                             DisplayNotEnrolled();
                         }
                                              
@@ -132,7 +131,6 @@ namespace WMSURFIDSYS.Client
             students.Course = db.Courses.Get(student.CourseID);
             students.College = db.Colleges.Get(student.CollegeID);
             
-
             if (this.InvokeRequired)
             {
                 this.Invoke(new Action<Student>(DisplayStudentInfo), student);
@@ -145,16 +143,12 @@ namespace WMSURFIDSYS.Client
             LName.Text = student.LastName.ToString();
             FName.Text = student.FirstName.ToString();
             MName.Text = student.MidName.ToString();
+            //Message.Text = student.Message.ToString();
             CAbbv.Text = students.Course.CourseAbbv.ToString();
-            Col.Text = student.College.CollegeName.ToString();
-            Message.Text = student.Message.ToString();
-
-           // CourseAbbv.Text = students.Course.CourseAbbv.ToString();
-
-            //display image
-            image.Image = byteArrayToImage(student.Image);
-
+            //labelCollege.Text = student.College.CollegeName.ToString();
             
+            //display image
+            image.Image = byteArrayToImage(student.Image);        
         }
 
         private void DisplayNotValid()
@@ -167,6 +161,11 @@ namespace WMSURFIDSYS.Client
 
             //display data
             Error.Text = "Student is not registered.";
+            StudID.Text = "";
+            LName.Text = "Not Registered";
+            FName.Text = "";
+            MName.Text = "";
+            CAbbv.Text = "";
         }
 
         private void DisplayNotEnrolled()
@@ -218,5 +217,22 @@ namespace WMSURFIDSYS.Client
         {
 
         }
+
+        private void label3_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void Message_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void labelCollege_Click(object sender, EventArgs e)
+        {
+
+        }
+
+       
     }
 }
