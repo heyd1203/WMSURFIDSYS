@@ -116,7 +116,7 @@
             // image
             // 
             this.image.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.image.Image = global::WMSURFIDSYS.Client.Properties.Resources.photo_not_available;
+            this.image.Image = global::WMSURFIDSYS.Client.Properties.Resources.not_registered;
             this.image.InitialImage = ((System.Drawing.Image)(resources.GetObject("image.InitialImage")));
             this.image.Location = new System.Drawing.Point(27, 90);
             this.image.Margin = new System.Windows.Forms.Padding(4);

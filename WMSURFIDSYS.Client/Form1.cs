@@ -166,6 +166,9 @@ namespace WMSURFIDSYS.Client
             FName.Text = "";
             MName.Text = "";
             CAbbv.Text = "";
+            labelCollege.Text = "";
+
+            this.image.Image = Properties.Resources.not_registered;
         }
 
         private void DisplayNotEnrolled()

@@ -63,6 +63,16 @@ namespace WMSURFIDSYS.Client.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap not_registered {
+            get {
+                object obj = ResourceManager.GetObject("not_registered", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap photo_not_available {
             get {
                 object obj = ResourceManager.GetObject("photo not available", resourceCulture);
