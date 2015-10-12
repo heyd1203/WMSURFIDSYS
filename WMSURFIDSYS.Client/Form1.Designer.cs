@@ -43,7 +43,9 @@
             this.label = new System.Windows.Forms.Label();
             this.Message = new System.Windows.Forms.Label();
             this.labelCollege = new System.Windows.Forms.Label();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
             ((System.ComponentModel.ISupportInitialize)(this.image)).BeginInit();
+            this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
             // CAbbv
@@ -52,7 +54,7 @@
             this.CAbbv.BackColor = System.Drawing.Color.Transparent;
             this.CAbbv.Font = new System.Drawing.Font("Georgia", 26.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.CAbbv.ForeColor = System.Drawing.Color.Gainsboro;
-            this.CAbbv.Location = new System.Drawing.Point(300, 281);
+            this.CAbbv.Location = new System.Drawing.Point(595, 349);
             this.CAbbv.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.CAbbv.Name = "CAbbv";
             this.CAbbv.Size = new System.Drawing.Size(145, 41);
@@ -65,7 +67,7 @@
             this.MName.BackColor = System.Drawing.Color.Transparent;
             this.MName.Font = new System.Drawing.Font("Georgia", 26.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.MName.ForeColor = System.Drawing.Color.Gainsboro;
-            this.MName.Location = new System.Drawing.Point(301, 198);
+            this.MName.Location = new System.Drawing.Point(596, 257);
             this.MName.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.MName.Name = "MName";
             this.MName.Size = new System.Drawing.Size(70, 41);
@@ -79,7 +81,7 @@
             this.FName.BackColor = System.Drawing.Color.Gainsboro;
             this.FName.Font = new System.Drawing.Font("Georgia", 27.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.FName.ForeColor = System.Drawing.Color.Maroon;
-            this.FName.Location = new System.Drawing.Point(300, 146);
+            this.FName.Location = new System.Drawing.Point(595, 206);
             this.FName.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.FName.Name = "FName";
             this.FName.Size = new System.Drawing.Size(222, 43);
@@ -92,7 +94,7 @@
             this.LName.BackColor = System.Drawing.Color.Gainsboro;
             this.LName.Font = new System.Drawing.Font("Georgia", 27.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.LName.ForeColor = System.Drawing.Color.DarkRed;
-            this.LName.Location = new System.Drawing.Point(301, 91);
+            this.LName.Location = new System.Drawing.Point(596, 156);
             this.LName.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.LName.Name = "LName";
             this.LName.Size = new System.Drawing.Size(221, 43);
@@ -105,7 +107,7 @@
             this.StudID.BackColor = System.Drawing.Color.Transparent;
             this.StudID.Font = new System.Drawing.Font("Georgia", 21.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.StudID.ForeColor = System.Drawing.Color.Gainsboro;
-            this.StudID.Location = new System.Drawing.Point(43, 343);
+            this.StudID.Location = new System.Drawing.Point(258, 544);
             this.StudID.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.StudID.Name = "StudID";
             this.StudID.Size = new System.Drawing.Size(195, 34);
@@ -115,13 +117,14 @@
             // 
             // image
             // 
+            this.image.BackColor = System.Drawing.Color.WhiteSmoke;
             this.image.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.image.Image = global::WMSURFIDSYS.Client.Properties.Resources.not_registered;
             this.image.InitialImage = ((System.Drawing.Image)(resources.GetObject("image.InitialImage")));
-            this.image.Location = new System.Drawing.Point(27, 90);
+            this.image.Location = new System.Drawing.Point(197, 215);
             this.image.Margin = new System.Windows.Forms.Padding(4);
             this.image.Name = "image";
-            this.image.Size = new System.Drawing.Size(234, 238);
+            this.image.Size = new System.Drawing.Size(325, 325);
             this.image.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.image.TabIndex = 13;
             this.image.TabStop = false;
@@ -132,7 +135,7 @@
             this.ShowDate.BackColor = System.Drawing.Color.Transparent;
             this.ShowDate.Font = new System.Drawing.Font("Tahoma", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ShowDate.ForeColor = System.Drawing.Color.WhiteSmoke;
-            this.ShowDate.Location = new System.Drawing.Point(387, 30);
+            this.ShowDate.Location = new System.Drawing.Point(997, 23);
             this.ShowDate.Name = "ShowDate";
             this.ShowDate.Size = new System.Drawing.Size(179, 33);
             this.ShowDate.TabIndex = 24;
@@ -145,7 +148,7 @@
             this.ShowTime.BackColor = System.Drawing.Color.Transparent;
             this.ShowTime.Font = new System.Drawing.Font("Tahoma", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ShowTime.ForeColor = System.Drawing.Color.WhiteSmoke;
-            this.ShowTime.Location = new System.Drawing.Point(583, 30);
+            this.ShowTime.Location = new System.Drawing.Point(1004, 72);
             this.ShowTime.Name = "ShowTime";
             this.ShowTime.Size = new System.Drawing.Size(143, 33);
             this.ShowTime.TabIndex = 25;
@@ -157,7 +160,7 @@
             this.ShowSY.BackColor = System.Drawing.Color.Transparent;
             this.ShowSY.Font = new System.Drawing.Font("Tahoma", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ShowSY.ForeColor = System.Drawing.Color.WhiteSmoke;
-            this.ShowSY.Location = new System.Drawing.Point(131, 33);
+            this.ShowSY.Location = new System.Drawing.Point(25, 72);
             this.ShowSY.Name = "ShowSY";
             this.ShowSY.Size = new System.Drawing.Size(163, 33);
             this.ShowSY.TabIndex = 27;
@@ -169,18 +172,18 @@
             this.ShowSem.BackColor = System.Drawing.Color.Transparent;
             this.ShowSem.Font = new System.Drawing.Font("Tahoma", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ShowSem.ForeColor = System.Drawing.Color.WhiteSmoke;
-            this.ShowSem.Location = new System.Drawing.Point(30, 30);
+            this.ShowSem.Location = new System.Drawing.Point(25, 23);
             this.ShowSem.Name = "ShowSem";
-            this.ShowSem.Size = new System.Drawing.Size(76, 33);
+            this.ShowSem.Size = new System.Drawing.Size(159, 33);
             this.ShowSem.TabIndex = 26;
-            this.ShowSem.Text = "First";
+            this.ShowSem.Text = "First Sem  ";
             // 
             // Error
             // 
             this.Error.AutoSize = true;
             this.Error.Font = new System.Drawing.Font("Tahoma", 30F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Error.ForeColor = System.Drawing.Color.WhiteSmoke;
-            this.Error.Location = new System.Drawing.Point(57, 485);
+            this.Error.Location = new System.Drawing.Point(324, 646);
             this.Error.Name = "Error";
             this.Error.Size = new System.Drawing.Size(632, 48);
             this.Error.TabIndex = 28;
@@ -190,12 +193,12 @@
             // 
             this.label.AutoSize = true;
             this.label.BackColor = System.Drawing.Color.Gainsboro;
-            this.label.Font = new System.Drawing.Font("Georgia", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label.Font = new System.Drawing.Font("Georgia", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label.ForeColor = System.Drawing.Color.Maroon;
-            this.label.Location = new System.Drawing.Point(303, 331);
+            this.label.Location = new System.Drawing.Point(602, 406);
             this.label.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label.Name = "label";
-            this.label.Size = new System.Drawing.Size(132, 31);
+            this.label.Size = new System.Drawing.Size(105, 25);
             this.label.TabIndex = 30;
             this.label.Text = "Message";
             this.label.Click += new System.EventHandler(this.label1_Click);
@@ -203,28 +206,37 @@
             // Message
             // 
             this.Message.AutoSize = true;
-            this.Message.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Message.Font = new System.Drawing.Font("Tahoma", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Message.ForeColor = System.Drawing.Color.Gainsboro;
-            this.Message.Location = new System.Drawing.Point(303, 362);
+            this.Message.Location = new System.Drawing.Point(11, 27);
             this.Message.Name = "Message";
-            this.Message.Size = new System.Drawing.Size(379, 95);
+            this.Message.Size = new System.Drawing.Size(358, 161);
             this.Message.TabIndex = 33;
-            this.Message.Text = "                                                                          \r\n\r\n\r\n\r" +
-    "\n\r\n";
+            this.Message.Text = "                                                          \r\n\r\n\r\n\r\n\r\n\r\n\r\n";
             this.Message.Click += new System.EventHandler(this.Message_Click);
             // 
             // labelCollege
             // 
             this.labelCollege.AutoSize = true;
             this.labelCollege.BackColor = System.Drawing.Color.Transparent;
-            this.labelCollege.Font = new System.Drawing.Font("Georgia", 26.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelCollege.Font = new System.Drawing.Font("Georgia", 21.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.labelCollege.ForeColor = System.Drawing.Color.Gainsboro;
-            this.labelCollege.Location = new System.Drawing.Point(300, 239);
+            this.labelCollege.Location = new System.Drawing.Point(595, 306);
             this.labelCollege.Name = "labelCollege";
-            this.labelCollege.Size = new System.Drawing.Size(149, 41);
+            this.labelCollege.Size = new System.Drawing.Size(125, 34);
             this.labelCollege.TabIndex = 36;
             this.labelCollege.Text = "College";
             this.labelCollege.Click += new System.EventHandler(this.labelCollege_Click);
+            // 
+            // groupBox1
+            // 
+            this.groupBox1.Controls.Add(this.Message);
+            this.groupBox1.Location = new System.Drawing.Point(599, 414);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(379, 197);
+            this.groupBox1.TabIndex = 37;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "groupBox1";
             // 
             // WMSURFIDSYS
             // 
@@ -233,9 +245,8 @@
             this.BackColor = System.Drawing.Color.Maroon;
             this.BackgroundImage = global::WMSURFIDSYS.Client.Properties.Resources.WinForm_BG_v2;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.ClientSize = new System.Drawing.Size(739, 540);
+            this.ClientSize = new System.Drawing.Size(1264, 762);
             this.Controls.Add(this.labelCollege);
-            this.Controls.Add(this.Message);
             this.Controls.Add(this.label);
             this.Controls.Add(this.Error);
             this.Controls.Add(this.ShowSY);
@@ -248,10 +259,13 @@
             this.Controls.Add(this.LName);
             this.Controls.Add(this.StudID);
             this.Controls.Add(this.image);
+            this.Controls.Add(this.groupBox1);
             this.Name = "WMSURFIDSYS";
             this.Text = "WMSURFIDSYS";
             this.Load += new System.EventHandler(this.Form1_Load);
             ((System.ComponentModel.ISupportInitialize)(this.image)).EndInit();
+            this.groupBox1.ResumeLayout(false);
+            this.groupBox1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -273,6 +287,7 @@
         private System.Windows.Forms.Label label;
         private System.Windows.Forms.Label Message;
         private System.Windows.Forms.Label labelCollege;
+        private System.Windows.Forms.GroupBox groupBox1;
     }
 }
 

@@ -62,7 +62,14 @@
         </dd>
     </dl>
 </div>
-@if (Model.Student.EPC.IsEmpty() == false)
+
+@if (String.IsNullOrWhiteSpace(Model.Student.EPC))
+{
+    @Html.Label("Cannot Deactivate since EPC is empty", htmlAttributes: new { size = 20, @class = "text-danger" })
+    <br />
+}
+
+@if (!String.IsNullOrWhiteSpace(Model.Student.EPC))
 {
     <h4>Deactivation Tag Details</h4>
     <div>
@@ -109,11 +116,7 @@
         </div>
     }
 }
-@if (Model.Student.EPC.IsEmpty() == true)
-{
-    @Html.Label("Cannot Deactivate since EPC is empty", htmlAttributes: new {size = 20, @class = "text-danger" })   
-    <br />
-}
+
 <p>
     @Html.ActionLink("Edit", "Edit", new { id = Model.Student.Id }) |
     @Html.ActionLink("Back to List", "Index")

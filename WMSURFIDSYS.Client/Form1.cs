@@ -44,7 +44,7 @@ namespace WMSURFIDSYS.Client
                 validenrollmentdate.Schoolyear = db.SchoolYears.Get(validenrollmentdate.SchoolYearID);
             }
 
-            ShowSem.Text = validenrollmentdate.Semester.SemesterName.ToString();
+            ShowSem.Text = validenrollmentdate.Semester.SemesterName.ToString() + " Sem";
             ShowSY.Text = validenrollmentdate.Schoolyear.SchoolYearRange.ToString();
 
             findThread = new Thread(new ThreadStart(myThread));
@@ -127,28 +127,36 @@ namespace WMSURFIDSYS.Client
             var db = DAL.DbContext.Create();
 
             //get course
-            var students = db.Students.Get(student.Id);
-            students.Course = db.Courses.Get(student.CourseID);
-            students.College = db.Colleges.Get(student.CollegeID);
+            var stud = db.Students.Get(student.Id);
+            stud.Course = db.Courses.Get(stud.CourseID);
+            stud.College = db.Colleges.Get(stud.CollegeID);
             
             if (this.InvokeRequired)
             {
-                this.Invoke(new Action<Student>(DisplayStudentInfo), student);
+                this.Invoke(new Action<Student>(DisplayStudentInfo), stud);
                 return;
             }
 
             //display data
             Error.Text = "";
-            StudID.Text = student.StudentID.ToString();
-            LName.Text = student.LastName.ToString();
-            FName.Text = student.FirstName.ToString();
-            MName.Text = student.MidName.ToString();
-            //Message.Text = student.Message.ToString();
-            CAbbv.Text = students.Course.CourseAbbv.ToString();
-            //labelCollege.Text = student.College.CollegeName.ToString();
+            StudID.Text = stud.StudentID.ToString();
+            LName.Text = stud.LastName.ToString();
+            FName.Text = stud.FirstName.ToString();
+            MName.Text = stud.MidName.ToString();
+            CAbbv.Text = stud.Course.CourseAbbv.ToString();
+            labelCollege.Text = stud.College.CollegeName.ToString();
+
+            if(stud.Message != null)
+            {
+                Message.Text = stud.Message.ToString();
+            }
+            else 
+            {
+                Message.Text = "";
+            }
             
             //display image
-            image.Image = byteArrayToImage(student.Image);        
+            image.Image = byteArrayToImage(stud.Image);        
         }
 
         private void DisplayNotValid()
@@ -162,11 +170,12 @@ namespace WMSURFIDSYS.Client
             //display data
             Error.Text = "Student is not registered.";
             StudID.Text = "";
-            LName.Text = "Not Registered";
+            LName.Text = "";
             FName.Text = "";
             MName.Text = "";
             CAbbv.Text = "";
             labelCollege.Text = "";
+            Message.Text = "";
 
             this.image.Image = Properties.Resources.not_registered;
         }
