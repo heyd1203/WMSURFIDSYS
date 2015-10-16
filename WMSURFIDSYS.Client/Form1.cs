@@ -168,9 +168,9 @@ namespace WMSURFIDSYS.Client
             }
 
             //display data
-            Error.Text = "Student is not registered.";
+            Error.Text = "";
             StudID.Text = "";
-            LName.Text = "";
+            LName.Text = "Not registered.";
             FName.Text = "";
             MName.Text = "";
             CAbbv.Text = "";
