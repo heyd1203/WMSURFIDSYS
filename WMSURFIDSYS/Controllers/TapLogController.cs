@@ -1,8 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+using WMSURFIDSYS.ViewModel;
 
 namespace WMSURFIDSYS.Controllers
 {
@@ -12,7 +16,7 @@ namespace WMSURFIDSYS.Controllers
         public ActionResult Index(string searchString)
         {
             var db = DAL.DbContext.Create();
-            
+
             IEnumerable<DAL.TapLog> taplogs = db.TapLogs.All().ToList();
             taplogs = taplogs.OrderByDescending(t => t.DateTimeTap);
 
@@ -33,6 +37,71 @@ namespace WMSURFIDSYS.Controllers
             return View(taplogs.ToList());
         }
 
+
+        public ActionResult ExportToExcel(DateTime? fromDate, DateTime? toDate)
+        {
+            var db = DAL.DbContext.Create();
+
+            //var exportToExcelModel = new ExportToExcelData();
+
+            GridView gv = new GridView();
+
+            IEnumerable<DAL.TapLog> taplogs = db.TapLogs.All().ToList();
+
+            taplogs = taplogs.OrderByDescending(t => t.DateTimeTap);
+
+            if (!fromDate.HasValue) fromDate = DateTime.Now.Date;
+            if (!toDate.HasValue) toDate = fromDate.GetValueOrDefault(DateTime.Now.Date).Date.AddDays(1);
+            if (toDate < fromDate) toDate = fromDate.GetValueOrDefault(DateTime.Now.Date).Date.AddDays(1);
+            ViewBag.fromDate = fromDate;
+            ViewBag.toDate = toDate;
+
+            var confromDate = Convert.ToDateTime(fromDate);
+            var contoDate = Convert.ToDateTime(toDate);
+
+            var addToDate = contoDate.AddDays(1);
+
+            //List<ExportToExcelData> list = new List<ExportToExcelData>();
+            taplogs = db.SelectStudentsDateTap(confromDate, addToDate);
+
+            //foreach (var taplog in taplogs)
+            //{
+            //    taplog.Student = db.Students.Get(taplog.StudentID);
+            //    taplog.Student.Course = db.Courses.Get(taplog.Student.CourseID);
+
+            //    list.Add(new ExportToExcelData()
+            //    {
+            //        DateTimeTap = taplog.DateTimeTap,
+            //        StudentID = taplog.Student.StudentID,
+            //        LastName = taplog.Student.LastName,
+            //        FirstName = taplog.Student.FirstName,
+            //        CourseAbbv = taplog.Student.Course.CourseAbbv
+            //    });
+            //}
+
+            //gv.DataSource = list;
+            gv.DataSource = taplogs;
+            gv.DataBind();
+
+            Response.Clear();
+            Response.Buffer = true;
+            Response.ContentType = "application/ms-excel";
+            Response.AddHeader("content-disposition", "attachment;filename=StudentTapLogList.xls");
+            Response.Charset = "";
+
+            StringWriter sw = new StringWriter();
+            HtmlTextWriter htw = new HtmlTextWriter(sw);
+
+            gv.RenderControl(htw);
+
+            Response.Output.Write(sw.ToString());
+            Response.Flush();
+            Response.End();
+
+            return RedirectToAction("Index");
+            //return View(list.ToList());
+        }
+
         public ActionResult SearchByDate(DateTime? fromDate, DateTime? toDate)
         {
             var db = DAL.DbContext.Create();
@@ -51,9 +120,7 @@ namespace WMSURFIDSYS.Controllers
 
             var addToDate = contoDate.AddDays(1);
 
-
             taplogs = db.SelectStudentsDateTap(confromDate, addToDate);
-           
 
             foreach (var taplog in taplogs)
             {

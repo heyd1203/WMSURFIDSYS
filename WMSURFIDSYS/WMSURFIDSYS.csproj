@@ -218,6 +218,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="ViewModel\DeactivateTagData.cs" />
+    <Compile Include="ViewModel\ExportToExcelData.cs" />
     <Compile Include="ViewModel\StudentDetailsData.cs" />
   </ItemGroup>
   <ItemGroup>
