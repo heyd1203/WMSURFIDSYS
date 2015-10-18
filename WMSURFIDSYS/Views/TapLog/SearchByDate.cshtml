@@ -43,11 +43,15 @@
         <div class="form-group">
             <div class="col-lg-11 col-lg-offset-1">
                 <input type="submit" value="Search" />
+                @Html.ActionLink("Export to Excel", "ExportToExcel",
+                new
+                {
+                    fromDate = fromDate,
+                    toDate = toDate
+                })
             </div>
         </div>
     </div>
-
-    @Html.ActionLink("Export to Excel", "ExportToExcel")
 }
 
 <p> </p>
