@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(WMSURFIDSYS));
             this.CAbbv = new System.Windows.Forms.Label();
             this.MName = new System.Windows.Forms.Label();
@@ -44,6 +45,7 @@
             this.Message = new System.Windows.Forms.Label();
             this.labelCollege = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.timer1 = new System.Windows.Forms.Timer(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.image)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
@@ -148,7 +150,7 @@
             this.ShowTime.BackColor = System.Drawing.Color.Transparent;
             this.ShowTime.Font = new System.Drawing.Font("Tahoma", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ShowTime.ForeColor = System.Drawing.Color.WhiteSmoke;
-            this.ShowTime.Location = new System.Drawing.Point(1004, 72);
+            this.ShowTime.Location = new System.Drawing.Point(997, 72);
             this.ShowTime.Name = "ShowTime";
             this.ShowTime.Size = new System.Drawing.Size(143, 33);
             this.ShowTime.TabIndex = 25;
@@ -238,6 +240,10 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "groupBox1";
             // 
+            // timer1
+            // 
+            this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
+            // 
             // WMSURFIDSYS
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -288,6 +294,7 @@
         private System.Windows.Forms.Label Message;
         private System.Windows.Forms.Label labelCollege;
         private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.Timer timer1;
     }
 }
 

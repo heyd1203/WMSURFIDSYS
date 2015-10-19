@@ -32,8 +32,9 @@ namespace WMSURFIDSYS.Client
             USBApi.API_OpenUsb();
 
             //display current date and time
-            ShowDate.Text = DateTime.Now.ToString("MM dd yyyy");
-            ShowTime.Text = DateTime.Now.ToString("hh:mm tt");
+            timer1.Start();
+            
+           
 
             DateTime today = DateTime.Today;
             var validenrollmentdate = db.SelectSemSchoolYear(today);
@@ -243,6 +244,13 @@ namespace WMSURFIDSYS.Client
         private void labelCollege_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+            DateTime dateTime = DateTime.Now;
+            this.ShowTime.Text = dateTime.ToString("hh:mm:ss tt");
+            this.ShowDate.Text = dateTime.ToString("MM dd yyyy");
         }
 
        
