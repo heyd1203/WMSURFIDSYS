@@ -41,6 +41,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="CsvHelper">
+      <HintPath>..\..\..\..\..\Desktop\csvhelper.2.13.2\lib\net40-client\CsvHelper.dll</HintPath>
+    </Reference>
     <Reference Include="Dapper, Version=1.40.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Dapper.1.42\lib\net45\Dapper.dll</HintPath>
       <Private>True</Private>
@@ -219,6 +222,7 @@
     <Compile Include="Startup.cs" />
     <Compile Include="ViewModel\DeactivateTagData.cs" />
     <Compile Include="ViewModel\ExportToExcelData.cs" />
+    <Compile Include="ViewModel\ImportViewModelData.cs" />
     <Compile Include="ViewModel\StudentDetailsData.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -411,9 +415,12 @@
     <Content Include="Views\Student\Deactivate.cshtml" />
     <Content Include="Views\TapLog\SearchByDate.cshtml" />
     <Content Include="Views\Student\Filter.cshtml" />
+    <Content Include="Views\Student\UploadCSVFile.cshtml" />
+    <Content Include="Views\Student\PreviewCSVFile.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Files\" />
     <Folder Include="Views\DeactivateTag\" />
     <Folder Include="Views\File\" />
   </ItemGroup>

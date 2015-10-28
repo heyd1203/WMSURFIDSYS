@@ -1,0 +1,80 @@
+﻿@model IEnumerable<WMSURFIDSYS.ViewModel.ImportViewModel>
+
+@{
+    ViewBag.Title = "PreviewCSVFile";
+}
+
+<h2>Preview of Uploaded CSV File</h2>
+
+@using (Html.BeginForm("UpdateEnrollemntDate", "Student", null, FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+    <div class="form-horizontal">
+        <h4>Update Enrollment Date</h4>
+        <hr />
+        <div class="text-danger">
+            @ViewBag.Message     
+        </div>
+        <p></p>
+        <div class="form-group">
+            <div class="col-md-8">
+                <input type="submit" value="Update" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+
+
+<table class="table">
+    <tr>
+        <th>
+            Student Number
+        </th>
+        <th>
+            Last Name
+        </th>
+        <th>
+            First Name
+        </th>
+        <th>
+            Enrollment Date
+        </th>
+
+        <th></th>
+    </tr>
+    @{
+        int i = 0;
+      }
+    @foreach (var item in Model)
+    {
+         <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.StudentID)
+                <input type="hidden" name='StudentList[@i].StudentID' value='@item.StudentID' />
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LastName)
+                <input type="hidden" name='StudentList[@i].LastName' value='@item.LastName' />
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FirstName)
+                <input type="hidden" name='StudentList[@i].FirstName' value='@item.FirstName' />
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EnrollmentDate)
+                <input type="hidden" name='StudentList[@i].EnrollmentDate' value='@item.EnrollmentDate' />
+            </td>
+        </tr>
+        
+        i++;
+    }
+
+</table>
+<br />
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

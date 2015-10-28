@@ -14,6 +14,10 @@
     @Html.ActionLink("Create New", "Create") |
     @Html.ActionLink("Custom Filter", "Filter")
 </p>
+<p>
+    <a href="/Files/UpdateEnrollmentDate.csv"> Download CSV File Template </a>|
+    @Html.ActionLink("Update Enrollment Date", "UploadCSVFile")  
+</p>
 @using (Html.BeginForm("Index", "Student", FormMethod.Get))
 {
     //the following are search options

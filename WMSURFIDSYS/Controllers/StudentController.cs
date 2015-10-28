@@ -11,6 +11,11 @@ using Dapper;
 using System.Data.Entity;
 using PagedList;
 using WMSURFIDSYS.ViewModel;
+using System.IO;
+using CsvHelper;
+using System.Text;
+using System.Data;
+using System.Web.UI.WebControls;
 
 namespace WMSURFIDSYS.Controllers
 {
@@ -68,6 +73,71 @@ namespace WMSURFIDSYS.Controllers
             //return View(students);
         }
 
+        public ActionResult UploadCSVFile ()
+        {
+            var db = DAL.DbContext.Create();
+
+            var students = db.Students.All();
+
+            students = students.OrderBy(s => s.EnrollmentDate);
+
+            foreach (var student in students)
+            {
+                student.Course = db.Courses.Get(student.CourseID);
+            }
+
+            return View(students);
+        }
+
+        [HttpPost]
+        public ActionResult PreviewCSVFile(HttpPostedFileBase uploadFile)
+        {
+            
+            var reader = new StreamReader(uploadFile.InputStream);
+            var row = reader.ReadLine(); // read the header
+
+            var list = new List<ImportViewModel>();
+
+            while((row = reader.ReadLine()) != null){
+                var splited = row.Split(',');
+
+                list.Add(new ImportViewModel
+                {
+                    StudentID = Convert.ToInt32(splited[0]),
+                    LastName = splited[1],
+                    FirstName = splited[2],
+                    EnrollmentDate = Convert.ToDateTime(splited[3])
+                   
+                });
+            }
+            ViewBag.Message = "Please check the the following data before clicking update.";
+            return View(list);
+        }
+
+        public ActionResult UpdateEnrollemntDate(List<ImportViewModel> StudentList)
+        {
+            var db = DAL.DbContext.Create();
+
+            //var studentsToUpdate = new ImportViewModel();
+            var students = db.Students.All();
+
+            if (ModelState.IsValid)
+            {
+                foreach (ImportViewModel updatedStudent in StudentList)
+                {
+                    var student = students.Where(s => s.StudentID  == updatedStudent.StudentID).First();
+
+                    student.EnrollmentDate = updatedStudent.EnrollmentDate;
+                    db.Students.Update(student.Id, student);
+                }
+                
+                return RedirectToAction("Index");
+            }
+
+            return View(students);
+        }
+
+
         public ActionResult Filter(int? page, string option)
         {
              var db = DAL.DbContext.Create();
@@ -104,7 +174,6 @@ namespace WMSURFIDSYS.Controllers
             int pageNumber = (page ?? 1);
             return View(students.ToPagedList(pageNumber, pageSize));
         }
-
 
         public class SelectModel
         {
